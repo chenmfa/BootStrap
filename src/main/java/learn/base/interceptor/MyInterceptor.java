@@ -31,7 +31,8 @@ public class MyInterceptor extends HandlerInterceptorAdapter{
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
       Object obj) throws Exception {
 		String ipAddr = RequestUtil.getIpAddr(request);
-		logger.info("本次请求来自于--"+ipAddr);
+		String macAddress = RequestUtil.getMacAddress(request);
+		logger.info("本次请求来自于--"+ipAddr+"---MAC地址："+ macAddress);
     return true;
   }
 
