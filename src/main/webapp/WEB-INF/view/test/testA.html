@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<script type="text/javascript" src="D:\\workspace\\HS_Job\\BootStrap\\WebContent\\js\\jquery-1.10.2.js"></script>
+</head>
+
+<body>
+<a href="http://www.baidu.com" id="aa" target="_blank">跳转</a>
+<!------------------------------------------------------------------>
+<form id="pagerForm" method="post" action="notice/noticeList.do">
+	<input type="hidden" name="pageNum" value="${pageModel.pageNum}"/>
+    <input type="hidden" name="numPerPage" value="${pageModel.numPerPage}" />
+     <input type="hidden" name="title" value="${noticeModel.title}">	
+     <input type="hidden" name="state" value="${noticeModel.state}">	
+</form>
+<div class="pageHeader">
+	<form id="noticeListForm" onsubmit="return navTabSearch(this);"
+			   action="notice/noticeList.do" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+				状态：	
+				<select name="state" >
+				                 <option value="1">请选择</option>
+							     <option value="1">未发送</option>
+							     <option value="2">已发送</option>
+				</select>
+				</td>
+				
+				<td>
+					<input class="textInput" id="title"
+						style="width:120px;margin-left:15px;" name="title"   placeholder="输入关键字..."
+						    value="${noticeModel.title}"   type="text" />
+				</td>
+				<td>
+				      <button   type="submit">检索</button>
+				</td>
+				
+			</tr>
+		</table>
+		
+		</div>	
+	</form>
+</div>
+
+<div class="pageContent">
+		<div class="panelBar" style="position:static;width:100%;">
+			<ul class="toolBar">
+				<li>
+				<a class="add" href="notice/addNotice.do" target="navTab"><span>添加公告</span></a>
+				</li>
+			</ul>
+		</div>
+</div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+			<tr align="center">
+				 <th width="5%">序号</th>
+				<th width="10%">标题</th>
+				<th width="27%">内容</th>
+				<th width="15%">发送时间</th>
+				<th width="10%">发送状态</th>
+				<th width="5%">点赞</th>  
+				<th width="5%">评论</th>
+				<th width="10%">操作</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<c:forEach items="${noticeList}" var="bean" varStatus="status">
+				<tr target="list_item_id"  rel="${bean.id}"  id="dianji">
+				<td>${bean.id }</td> 
+			   <td>${bean.title }</td> 
+			   <td>${bean.context }</td> 
+				<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${bean.sendTime }"/></td>
+				<td  id="state">2</td>
+				<td>${bean.praiseNumber}</td>
+				<td>${bean.commentNumber}</td> 
+				<td>
+					<a href="notice/updateNotice.do?id=${bean.id}" target="navTab"  title="修改公告"><span style="color:#297acc">修改</span></a>&nbsp;|&nbsp;
+					<a href="notice/deleteNotice.do?id=${bean.id}" target="ajaxTodo"  title="是否此删除此公告？"><span style="color:#297acc">删除</span></a>&nbsp;|&nbsp;
+					<a href="notice/sendNotice.do?id=${bean.id}"  target="navTab"  title="发送公告"   id="send"><span>发送</span></a>
+				</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
+</body>
+
+<script>
+	var no = document.getElementById('aa');
+	no.onclick=function(e){
+		aa(e);
+	};
+	var t=2;
+	function aa(e){
+		t++;
+		if(t%2==1){
+			e.preventDefault();
+			return false;
+		}
+	}
+	
+	
+	var no = document.getElementById('send');
+		no.onclick = function(e){
+			send(e);
+		};
+		var  mm = $("#state").html();
+		alert(mm);
+		
+		function  send(e){
+		alert(mm);
+		if(mm ==2){
+			e.preventDefault();
+			return false;
+		}
+	}
+</script>
+</html>

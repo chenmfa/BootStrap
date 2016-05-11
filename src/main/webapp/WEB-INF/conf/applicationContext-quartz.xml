@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:p="http://www.springframework.org/schema/p"    
+    xmlns:context = "http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+            http://www.springframework.org/schema/context 
+            http://www.springframework.org/schema/context/spring-context-3.2.xsd
+            http://www.springframework.org/schema/tx   
+            http://www.springframework.org/schema/tx/spring-tx-3.2.xsd  
+            http://www.springframework.org/schema/mvc   
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task-3.2.xsd"
+    default-autowire="byName">
+    <!-- 方法1： 配置quartz,继承QuartzJobBean -->
+  <!-- 新版的quartz不支持JobDetailBean -->
+  <bean id="job_QuartzJobBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean" >
+  	<property name="jobClass" value="learn.scheduledtask.ScheduledTask" />
+  	<property name="durability" value="true"></property> 
+  	<property name="jobDataAsMap">
+  		<map>
+  			<entry key="timeout" value="0" />
+  		</map>
+  	</property>
+  </bean>
+  <!-- 配置触发器，每隔多久 -->
+  <!-- 新版本的quartz不能用SimpleTriggerBean -->
+  <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+  	<property name="jobDetail" ref="job_QuartzJobBean" />
+  	<property name="startDelay" value="0" /> <!-- 实例化工厂后，经过3秒开始调度 -->
+  	<property name="repeatInterval" value="2000" /><!-- 每隔2秒执行一次 -->
+  </bean>
+  <!-- 配置触发器，每到几点 -->
+  <!-- cronExpression: 
+		Seconds
+		Minutes
+		Hours
+		Day-of-Month
+		Month
+		Day-of-Week
+		Year (可选字段)
+   -->
+   <!-- 新版本的quartz不能用CronTriggerBean -->
+  <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+  	<property name="jobDetail" ref="job_QuartzJobBean" />
+  	<property name="cronExpression" value="0 06 15 * * ?" /><!-- 每天12点 -->
+  </bean>
+  
+  <!-- 配置工厂调度器 -->
+  <bean id="scheduleFactory" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
+  	<property name="triggers">
+  		<list>
+  			<ref bean="nonExtendsTrigger" />
+  			<ref bean="cronTrigger" />
+  			<!-- <ref bean="simpleTrigger" /> -->  		
+  		</list>
+  	</property>
+  </bean>
+  <!-- 方法2 通过单个bean类来实现调度，不用继承 -->
+  <bean id="nonExtendsSchedule"  
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		<property name="targetObject">  
+			<bean class="learn.scheduledtask.NonExtendsScheduledTask" />  
+		</property>  
+		<property name="targetMethod" value="schedule" />  
+		<property name="concurrent" value="false" /><!-- 作业不并发调度 -->  
+	</bean>
+	
+	<bean id="nonExtendsTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+  	<property name="jobDetail" ref="nonExtendsSchedule" />
+  	<property name="startDelay" value="0" /> <!-- 实例化工厂后，经过3秒开始调度 -->
+  	<property name="repeatInterval" value="200000000" /><!-- 每隔2秒执行一次 -->
+  </bean> 
+  <!-- 方法2结束 --> 
+  <!-- 需要添加 schema
+	  xmlns:task="http://www.springframework.org/schema/task"
+	  http://www.springframework.org/schema/task
+	  http://www.springframework.org/schema/task/spring-task-3.2.xsd
+   -->
+   <task:scheduled-tasks>
+   	<task:scheduled ref="springTask" method="springTask" cron="* * 8 * * ?"/>
+   </task:scheduled-tasks>
+   <!-- 在对应实体类上加@component("实体类名称") -->
+  <!-- 方法3 注解方式 -->
+  
+  <!-- 方法4 纯注解形式, 注意：这边要加@Component注解才会去关联 -->
+  <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>  
+  <task:scheduler id="qbScheduler" pool-size="10"/>  
+  <!-- end -->
+    
+</beans>

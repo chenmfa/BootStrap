@@ -1,0 +1,1037 @@
+1|300097|1134|<?xml version="1.0" encoding="UTF-8"?>
+
+<process xmlns="http://jbpm.org/4.4/jpdl" name="insflow300097" key="insflow300097">
+  <description>自动发布指令审批流程</description>
+  <start name="开始" id="start">
+    <transition name="tofork" to="riskfork"/>
+  </start>
+  <fork id="riskfork" name="风控并行开始">
+    <transition name="forkToJoin" to="join"/>
+    <transition name="human11" to="human11">
+      <condition expr="#{risk1&gt;0 &amp;&amp; calc_value1&gt;=100000.00000}"/>
+    </transition>
+    <transition name="human71" to="human71">
+      <condition expr="#{risk7&gt;0 &amp;&amp; calc_value7&gt;=0.05000}"/>
+    </transition>
+    <transition name="human81" to="human81">
+      <condition expr="#{risk8&gt;0 &amp;&amp; calc_value8&gt;=2000.00000}"/>
+    </transition>
+    <transition name="human91" to="human91">
+      <condition expr="#{risk9&gt;0 &amp;&amp; calc_value9&gt;=4000.00000}"/>
+    </transition>
+    <transition name="human101" to="human101">
+      <condition expr="#{risk10&gt;0 &amp;&amp; calc_value10&gt;=300.00000}"/>
+    </transition>
+    <transition name="human161" to="human161">
+      <condition expr="#{risk16&gt;0 &amp;&amp; calc_value16&gt;=500.00000}"/>
+    </transition>
+    <transition name="human171" to="human171">
+      <condition expr="#{risk17&gt;0 &amp;&amp; calc_value17&gt;=1000.00000}"/>
+    </transition>
+    <transition name="human191" to="human191">
+      <condition expr="#{risk19&gt;0 &amp;&amp; calc_value19&gt;=500.00000}"/>
+    </transition>
+    <transition name="human321" to="human321">
+      <condition expr="#{risk32&gt;0 &amp;&amp; calc_value32&gt;=0.05000}"/>
+    </transition>
+    <transition name="human491" to="human491">
+      <condition expr="#{risk49&gt;0 &amp;&amp; calc_value49&gt;=0.29000}"/>
+    </transition>
+    <transition name="human501" to="human501">
+      <condition expr="#{risk50&gt;0 &amp;&amp; calc_value50&gt;=100.00000}"/>
+    </transition>
+    <transition name="human731" to="human731">
+      <condition expr="#{risk73&gt;0 &amp;&amp; calc_value73&gt;=10000.00000}"/>
+    </transition>
+    <transition name="human981" to="human981">
+      <condition expr="#{risk98&gt;0 &amp;&amp; calc_value98&gt;=100.00000}"/>
+    </transition>
+    <transition name="human1001" to="human1001">
+      <condition expr="#{risk100&gt;0 &amp;&amp; calc_value100&gt;=1000.00000}"/>
+    </transition>
+    <transition name="human1031" to="human1031">
+      <condition expr="#{risk103&gt;0 &amp;&amp; calc_value103&gt;=0.00000}"/>
+    </transition>
+    <transition name="human1101" to="human1101">
+      <condition expr="#{risk110&gt;0 &amp;&amp; calc_value110&gt;=1500.00000}"/>
+    </transition>
+    <transition name="human1111" to="human1111">
+      <condition expr="#{risk111&gt;0 &amp;&amp; calc_value111&gt;=100.00000}"/>
+    </transition>
+    <transition name="human1121" to="human1121">
+      <condition expr="#{risk112&gt;0 &amp;&amp; calc_value112&gt;=2000.00000}"/>
+    </transition>
+    <transition name="human1131" to="human1131">
+      <condition expr="#{risk113&gt;0 &amp;&amp; calc_value113&gt;=2000.00000}"/>
+    </transition>
+    <transition name="human1141" to="human1141">
+      <condition expr="#{risk114&gt;0 &amp;&amp; calc_value114&gt;=1000.00000}"/>
+    </transition>
+    <transition name="human1161" to="human1161">
+      <condition expr="#{risk116&gt;0 &amp;&amp; calc_value116&gt;=500.00000}"/>
+    </transition>
+    <transition name="human1351" to="human1351">
+      <condition expr="#{risk135&gt;0 &amp;&amp; calc_value135&gt;=10000.00000}"/>
+    </transition>
+    <transition name="human1471" to="human1471">
+      <condition expr="#{risk147&gt;0 &amp;&amp; calc_value147&gt;=0.00000}"/>
+    </transition>
+    <transition name="human1481" to="human1481">
+      <condition expr="#{risk148&gt;0 &amp;&amp; calc_value148&gt;=10000.00000}"/>
+    </transition>
+    <transition name="human1501" to="human1501">
+      <condition expr="#{risk150&gt;0 &amp;&amp; calc_value150&gt;=1000.00000}"/>
+    </transition>
+    <transition name="human1521" to="human1521">
+      <condition expr="#{risk152&gt;0 &amp;&amp; calc_value152&gt;=4000.00000}"/>
+    </transition>
+    <transition name="human1541" to="human1541">
+      <condition expr="#{risk154&gt;0 &amp;&amp; calc_value154&gt;=800.00000}"/>
+    </transition>
+    <transition name="human1561" to="human1561">
+      <condition expr="#{risk156&gt;0 &amp;&amp; calc_value156&gt;=9000.00000}"/>
+    </transition>
+    <transition name="human1651" to="human1651">
+      <condition expr="#{risk165&gt;0 &amp;&amp; calc_value165&gt;=0.00000}"/>
+    </transition>
+    <transition name="human1811" to="human1811">
+      <condition expr="#{risk181&gt;0 &amp;&amp; calc_value181&gt;=0.00000}"/>
+    </transition>
+  </fork>
+  <join id="join" name="风控并行结束">
+    <transition name="next" to="end"/>
+  </join>
+  <end id="end" name="结束"/>
+  <human name="human11" id="human11">
+    <participants>1</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision11"/>
+  </human>
+  <decision name="decision11" id="decision11">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value1 &gt;=100000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human71" id="human71">
+    <participants>1</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision71"/>
+  </human>
+  <decision name="decision71" id="decision71">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value7 &gt;=0.05000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human81" id="human81">
+    <participants>1</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision81"/>
+  </human>
+  <decision name="decision81" id="decision81">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value8 &gt;=2000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human91" id="human91">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision91"/>
+  </human>
+  <decision name="decision91" id="decision91">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value9 &gt;=4000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human101" id="human101">
+    <participants>1</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision101"/>
+  </human>
+  <decision name="decision101" id="decision101">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value10 &gt;=300.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human161" id="human161">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision161"/>
+  </human>
+  <decision name="decision161" id="decision161">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value16 &gt;=500.00000 &amp;&amp; calc_value16 &lt;800.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human162"/>
+  </decision>
+  <human name="human162" id="human162">
+    <participants>5</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision162"/>
+  </human>
+  <decision name="decision162" id="decision162">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value16 &gt;=800.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human171" id="human171">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision171"/>
+  </human>
+  <decision name="decision171" id="decision171">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value17 &gt;=1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human191" id="human191">
+    <participants>6</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision191"/>
+  </human>
+  <decision name="decision191" id="decision191">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value19 &gt;=500.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human321" id="human321">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision321"/>
+  </human>
+  <decision name="decision321" id="decision321">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value32 &gt;=0.05000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human491" id="human491">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision491"/>
+  </human>
+  <decision name="decision491" id="decision491">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value49 &gt;=0.29000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human501" id="human501">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision501"/>
+  </human>
+  <decision name="decision501" id="decision501">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value50 &gt;=100.00000 &amp;&amp; calc_value50 &lt;200.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human502"/>
+  </decision>
+  <human name="human502" id="human502">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision502"/>
+  </human>
+  <decision name="decision502" id="decision502">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value50 &gt;=200.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human731" id="human731">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision731"/>
+  </human>
+  <decision name="decision731" id="decision731">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value73 &gt;=10000.00000 &amp;&amp; calc_value73 &lt;15000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human732"/>
+  </decision>
+  <human name="human732" id="human732">
+    <participants>5</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision732"/>
+  </human>
+  <decision name="decision732" id="decision732">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value73 &gt;=15000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human981" id="human981">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision981"/>
+  </human>
+  <decision name="decision981" id="decision981">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value98 &gt;=100.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1001" id="human1001">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1001"/>
+  </human>
+  <decision name="decision1001" id="decision1001">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value100 &gt;=1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1031" id="human1031">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1031"/>
+  </human>
+  <decision name="decision1031" id="decision1031">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value103 &gt;=0.00000 &amp;&amp; calc_value103 &lt;700.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human1032"/>
+  </decision>
+  <human name="human1032" id="human1032">
+    <participants>5</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1032"/>
+  </human>
+  <decision name="decision1032" id="decision1032">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value103 &gt;=700.00000 &amp;&amp; calc_value103 &lt;800.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1101" id="human1101">
+    <participants>12</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1101"/>
+  </human>
+  <decision name="decision1101" id="decision1101">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value110 &gt;=1500.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1111" id="human1111">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1111"/>
+  </human>
+  <decision name="decision1111" id="decision1111">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value111 &gt;=100.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1121" id="human1121">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1121"/>
+  </human>
+  <decision name="decision1121" id="decision1121">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value112 &gt;=2000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1131" id="human1131">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1131"/>
+  </human>
+  <decision name="decision1131" id="decision1131">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value113 &gt;=2000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1141" id="human1141">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1141"/>
+  </human>
+  <decision name="decision1141" id="decision1141">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value114 &gt;=1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1161" id="human1161">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1161"/>
+  </human>
+  <decision name="decision1161" id="decision1161">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value116 &gt;=500.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1351" id="human1351">
+    <participants>13</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1351"/>
+  </human>
+  <decision name="decision1351" id="decision1351">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value135 &gt;=10000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1471" id="human1471">
+    <participants>15</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1471"/>
+  </human>
+  <decision name="decision1471" id="decision1471">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value147 &gt;=0.00000 &amp;&amp; calc_value147 &lt;10000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1481" id="human1481">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1481"/>
+  </human>
+  <decision name="decision1481" id="decision1481">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value148 &gt;=10000.00000 &amp;&amp; calc_value148 &lt;15000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human1482"/>
+  </decision>
+  <human name="human1482" id="human1482">
+    <participants>5</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1482"/>
+  </human>
+  <decision name="decision1482" id="decision1482">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value148 &gt;=15000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1501" id="human1501">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1501"/>
+  </human>
+  <decision name="decision1501" id="decision1501">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value150 &gt;=1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1521" id="human1521">
+    <participants>17</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1521"/>
+  </human>
+  <decision name="decision1521" id="decision1521">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value152 &gt;=4000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1541" id="human1541">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1541"/>
+  </human>
+  <decision name="decision1541" id="decision1541">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value154 &gt;=800.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1561" id="human1561">
+    <participants>18</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1561"/>
+  </human>
+  <decision name="decision1561" id="decision1561">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value156 &gt;=9000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1651" id="human1651">
+    <participants>6</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1651"/>
+  </human>
+  <decision name="decision1651" id="decision1651">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value165 &gt;=0.00000 &amp;&amp; calc_value165 &lt;0.01000}"/>
+    </transition>
+    <transition name="nextNode" to="human1652"/>
+  </decision>
+  <human name="human1652" id="human1652">
+    <participants>18</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1652"/>
+  </human>
+  <decision name="decision1652" id="decision1652">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value165 &gt;=0.01000 &amp;&amp; calc_value165 &lt;0.02000}"/>
+    </transition>
+    <transition name="nextNode" to="human1653"/>
+  </decision>
+  <human name="human1653" id="human1653">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1653"/>
+  </human>
+  <decision name="decision1653" id="decision1653">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value165 &gt;=0.02000 &amp;&amp; calc_value165 &lt;0.03000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1811" id="human1811">
+    <participants>19</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1811"/>
+  </human>
+  <decision name="decision1811" id="decision1811">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value181 &gt;=0.00000 &amp;&amp; calc_value181 &lt;1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human1812"/>
+  </decision>
+  <human name="human1812" id="human1812">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1812"/>
+  </human>
+  <decision name="decision1812" id="decision1812">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value181 &gt;=100|300097|朱辉杰|0|0|ECF4BB3572EB|W760AGNE|WINDOWS-GDLBSDI|115.236.91.15|BFEBFBFF00040651|3102|202004|0|2|||2|0|||{"company_id":"300097","biz_flow_xml":"<?xml version="1.0" encoding="UTF-8"?>
+
+<process xmlns="http://jbpm.org/4.4/jpdl" name="insflow300097" key="insflow300097">
+  <description>自动发布指令审批流程</description>
+  <start name="开始" id="start">
+    <transition name="tofork" to="riskfork"/>
+  </start>
+  <fork id="riskfork" name="风控并行开始">
+    <transition name="forkToJoin" to="join"/>
+    <transition name="human11" to="human11">
+      <condition expr="#{risk1&gt;0 &amp;&amp; calc_value1&gt;=100000.00000}"/>
+    </transition>
+    <transition name="human71" to="human71">
+      <condition expr="#{risk7&gt;0 &amp;&amp; calc_value7&gt;=0.05000}"/>
+    </transition>
+    <transition name="human81" to="human81">
+      <condition expr="#{risk8&gt;0 &amp;&amp; calc_value8&gt;=2000.00000}"/>
+    </transition>
+    <transition name="human91" to="human91">
+      <condition expr="#{risk9&gt;0 &amp;&amp; calc_value9&gt;=4000.00000}"/>
+    </transition>
+    <transition name="human101" to="human101">
+      <condition expr="#{risk10&gt;0 &amp;&amp; calc_value10&gt;=300.00000}"/>
+    </transition>
+    <transition name="human161" to="human161">
+      <condition expr="#{risk16&gt;0 &amp;&amp; calc_value16&gt;=500.00000}"/>
+    </transition>
+    <transition name="human171" to="human171">
+      <condition expr="#{risk17&gt;0 &amp;&amp; calc_value17&gt;=1000.00000}"/>
+    </transition>
+    <transition name="human191" to="human191">
+      <condition expr="#{risk19&gt;0 &amp;&amp; calc_value19&gt;=500.00000}"/>
+    </transition>
+    <transition name="human321" to="human321">
+      <condition expr="#{risk32&gt;0 &amp;&amp; calc_value32&gt;=0.05000}"/>
+    </transition>
+    <transition name="human491" to="human491">
+      <condition expr="#{risk49&gt;0 &amp;&amp; calc_value49&gt;=0.29000}"/>
+    </transition>
+    <transition name="human501" to="human501">
+      <condition expr="#{risk50&gt;0 &amp;&amp; calc_value50&gt;=100.00000}"/>
+    </transition>
+    <transition name="human731" to="human731">
+      <condition expr="#{risk73&gt;0 &amp;&amp; calc_value73&gt;=10000.00000}"/>
+    </transition>
+    <transition name="human981" to="human981">
+      <condition expr="#{risk98&gt;0 &amp;&amp; calc_value98&gt;=100.00000}"/>
+    </transition>
+    <transition name="human1001" to="human1001">
+      <condition expr="#{risk100&gt;0 &amp;&amp; calc_value100&gt;=1000.00000}"/>
+    </transition>
+    <transition name="human1031" to="human1031">
+      <condition expr="#{risk103&gt;0 &amp;&amp; calc_value103&gt;=0.00000}"/>
+    </transition>
+    <transition name="human1101" to="human1101">
+      <condition expr="#{risk110&gt;0 &amp;&amp; calc_value110&gt;=1500.00000}"/>
+    </transition>
+    <transition name="human1111" to="human1111">
+      <condition expr="#{risk111&gt;0 &amp;&amp; calc_value111&gt;=100.00000}"/>
+    </transition>
+    <transition name="human1121" to="human1121">
+      <condition expr="#{risk112&gt;0 &amp;&amp; calc_value112&gt;=2000.00000}"/>
+    </transition>
+    <transition name="human1131" to="human1131">
+      <condition expr="#{risk113&gt;0 &amp;&amp; calc_value113&gt;=2000.00000}"/>
+    </transition>
+    <transition name="human1141" to="human1141">
+      <condition expr="#{risk114&gt;0 &amp;&amp; calc_value114&gt;=1000.00000}"/>
+    </transition>
+    <transition name="human1161" to="human1161">
+      <condition expr="#{risk116&gt;0 &amp;&amp; calc_value116&gt;=500.00000}"/>
+    </transition>
+    <transition name="human1351" to="human1351">
+      <condition expr="#{risk135&gt;0 &amp;&amp; calc_value135&gt;=10000.00000}"/>
+    </transition>
+    <transition name="human1471" to="human1471">
+      <condition expr="#{risk147&gt;0 &amp;&amp; calc_value147&gt;=0.00000}"/>
+    </transition>
+    <transition name="human1481" to="human1481">
+      <condition expr="#{risk148&gt;0 &amp;&amp; calc_value148&gt;=10000.00000}"/>
+    </transition>
+    <transition name="human1501" to="human1501">
+      <condition expr="#{risk150&gt;0 &amp;&amp; calc_value150&gt;=1000.00000}"/>
+    </transition>
+    <transition name="human1521" to="human1521">
+      <condition expr="#{risk152&gt;0 &amp;&amp; calc_value152&gt;=4000.00000}"/>
+    </transition>
+    <transition name="human1541" to="human1541">
+      <condition expr="#{risk154&gt;0 &amp;&amp; calc_value154&gt;=800.00000}"/>
+    </transition>
+    <transition name="human1561" to="human1561">
+      <condition expr="#{risk156&gt;0 &amp;&amp; calc_value156&gt;=9000.00000}"/>
+    </transition>
+    <transition name="human1651" to="human1651">
+      <condition expr="#{risk165&gt;0 &amp;&amp; calc_value165&gt;=0.00000}"/>
+    </transition>
+    <transition name="human1811" to="human1811">
+      <condition expr="#{risk181&gt;0 &amp;&amp; calc_value181&gt;=0.00000}"/>
+    </transition>
+  </fork>
+  <join id="join" name="风控并行结束">
+    <transition name="next" to="end"/>
+  </join>
+  <end id="end" name="结束"/>
+  <human name="human11" id="human11">
+    <participants>1</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision11"/>
+  </human>
+  <decision name="decision11" id="decision11">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value1 &gt;=100000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human71" id="human71">
+    <participants>1</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision71"/>
+  </human>
+  <decision name="decision71" id="decision71">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value7 &gt;=0.05000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human81" id="human81">
+    <participants>1</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision81"/>
+  </human>
+  <decision name="decision81" id="decision81">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value8 &gt;=2000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human91" id="human91">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision91"/>
+  </human>
+  <decision name="decision91" id="decision91">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value9 &gt;=4000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human101" id="human101">
+    <participants>1</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision101"/>
+  </human>
+  <decision name="decision101" id="decision101">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value10 &gt;=300.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human161" id="human161">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision161"/>
+  </human>
+  <decision name="decision161" id="decision161">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value16 &gt;=500.00000 &amp;&amp; calc_value16 &lt;800.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human162"/>
+  </decision>
+  <human name="human162" id="human162">
+    <participants>5</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision162"/>
+  </human>
+  <decision name="decision162" id="decision162">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value16 &gt;=800.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human171" id="human171">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision171"/>
+  </human>
+  <decision name="decision171" id="decision171">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value17 &gt;=1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human191" id="human191">
+    <participants>6</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision191"/>
+  </human>
+  <decision name="decision191" id="decision191">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value19 &gt;=500.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human321" id="human321">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision321"/>
+  </human>
+  <decision name="decision321" id="decision321">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value32 &gt;=0.05000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human491" id="human491">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision491"/>
+  </human>
+  <decision name="decision491" id="decision491">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value49 &gt;=0.29000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human501" id="human501">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision501"/>
+  </human>
+  <decision name="decision501" id="decision501">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value50 &gt;=100.00000 &amp;&amp; calc_value50 &lt;200.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human502"/>
+  </decision>
+  <human name="human502" id="human502">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision502"/>
+  </human>
+  <decision name="decision502" id="decision502">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value50 &gt;=200.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human731" id="human731">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision731"/>
+  </human>
+  <decision name="decision731" id="decision731">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value73 &gt;=10000.00000 &amp;&amp; calc_value73 &lt;15000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human732"/>
+  </decision>
+  <human name="human732" id="human732">
+    <participants>5</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision732"/>
+  </human>
+  <decision name="decision732" id="decision732">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value73 &gt;=15000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human981" id="human981">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision981"/>
+  </human>
+  <decision name="decision981" id="decision981">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value98 &gt;=100.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1001" id="human1001">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1001"/>
+  </human>
+  <decision name="decision1001" id="decision1001">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value100 &gt;=1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1031" id="human1031">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1031"/>
+  </human>
+  <decision name="decision1031" id="decision1031">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value103 &gt;=0.00000 &amp;&amp; calc_value103 &lt;700.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human1032"/>
+  </decision>
+  <human name="human1032" id="human1032">
+    <participants>5</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1032"/>
+  </human>
+  <decision name="decision1032" id="decision1032">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value103 &gt;=700.00000 &amp;&amp; calc_value103 &lt;800.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1101" id="human1101">
+    <participants>12</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1101"/>
+  </human>
+  <decision name="decision1101" id="decision1101">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value110 &gt;=1500.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1111" id="human1111">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1111"/>
+  </human>
+  <decision name="decision1111" id="decision1111">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value111 &gt;=100.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1121" id="human1121">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1121"/>
+  </human>
+  <decision name="decision1121" id="decision1121">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value112 &gt;=2000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1131" id="human1131">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1131"/>
+  </human>
+  <decision name="decision1131" id="decision1131">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value113 &gt;=2000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1141" id="human1141">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1141"/>
+  </human>
+  <decision name="decision1141" id="decision1141">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value114 &gt;=1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1161" id="human1161">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1161"/>
+  </human>
+  <decision name="decision1161" id="decision1161">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value116 &gt;=500.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1351" id="human1351">
+    <participants>13</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1351"/>
+  </human>
+  <decision name="decision1351" id="decision1351">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value135 &gt;=10000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1471" id="human1471">
+    <participants>15</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1471"/>
+  </human>
+  <decision name="decision1471" id="decision1471">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value147 &gt;=0.00000 &amp;&amp; calc_value147 &lt;10000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1481" id="human1481">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1481"/>
+  </human>
+  <decision name="decision1481" id="decision1481">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value148 &gt;=10000.00000 &amp;&amp; calc_value148 &lt;15000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human1482"/>
+  </decision>
+  <human name="human1482" id="human1482">
+    <participants>5</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1482"/>
+  </human>
+  <decision name="decision1482" id="decision1482">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value148 &gt;=15000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1501" id="human1501">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1501"/>
+  </human>
+  <decision name="decision1501" id="decision1501">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value150 &gt;=1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1521" id="human1521">
+    <participants>17</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1521"/>
+  </human>
+  <decision name="decision1521" id="decision1521">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value152 &gt;=4000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1541" id="human1541">
+    <participants>9</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1541"/>
+  </human>
+  <decision name="decision1541" id="decision1541">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value154 &gt;=800.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1561" id="human1561">
+    <participants>18</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1561"/>
+  </human>
+  <decision name="decision1561" id="decision1561">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value156 &gt;=9000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1651" id="human1651">
+    <participants>6</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1651"/>
+  </human>
+  <decision name="decision1651" id="decision1651">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value165 &gt;=0.00000 &amp;&amp; calc_value165 &lt;0.01000}"/>
+    </transition>
+    <transition name="nextNode" to="human1652"/>
+  </decision>
+  <human name="human1652" id="human1652">
+    <participants>18</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1652"/>
+  </human>
+  <decision name="decision1652" id="decision1652">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value165 &gt;=0.01000 &amp;&amp; calc_value165 &lt;0.02000}"/>
+    </transition>
+    <transition name="nextNode" to="human1653"/>
+  </decision>
+  <human name="human1653" id="human1653">
+    <participants>3</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1653"/>
+  </human>
+  <decision name="decision1653" id="decision1653">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value165 &gt;=0.02000 &amp;&amp; calc_value165 &lt;0.03000}"/>
+    </transition>
+    <transition name="nextNode" to="join"/>
+  </decision>
+  <human name="human1811" id="human1811">
+    <participants>19</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1811"/>
+  </human>
+  <decision name="decision1811" id="decision1811">
+    <transition name="toJoin" to="join">
+      <condition expr="#{calc_value181 &gt;=0.00000 &amp;&amp; calc_value181 &lt;1000.00000}"/>
+    </transition>
+    <transition name="nextNode" to="human1812"/>
+  </decision>
+  <human name="human1812" id="human1812">
+    <participants>4</participants>
+    <transition name="toEnd" to="end"/>
+    <transition name="submit" to="decision1812"/>
+  </human>
+  <decision name="decision1812" id="decision1812">
+    <transition name="toJoin" to="join">
+      <c|300097|a016641a6d7330a95c8e7271ba9bcf9d|5203000

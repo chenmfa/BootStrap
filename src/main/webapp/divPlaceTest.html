@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<title>div垂直显示案例</title>
+	<script type="text/javascript" src="plugins/jquery-1.10.2.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/switch.css"/>
+</head>
+<div id="outer">
+<div style="background-color: red;width: 100%;height: 100%;">
+	
+	<div style="background-color:blue;width:400px;">
+		<div style="float:left;width:100px">第二个</div>
+		<div style="float:left;width:300px;word-break:break-all;">ssaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+	</div>
+	<div style="background-color:blue;width:400px;">
+		<div style="float:left;width:100px">第三个</div>
+		<div style="float:left;width:300px;word-break:break-all;">ssaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+	</div>
+</div>
+
+<a id="target1" target="_blank" href="https://www.baidu.com" >www.baidu.com</a>
+
+</div>
+<section>
+	<div class="switch demo3">
+		<input type="checkbox" checked/>
+		<label><i></i></label>
+	</div>
+</section>
+<script type="text/javascript">
+	$('#outer').click(function(){
+		alert('外层div激活');
+	});
+	//$('#target1')
+	$('a').click(function(e){
+		//e.preventDefault();//
+		//e.stopPropagation();
+		alert('你想跳往'+$(this).attr('href'));
+		return false;
+	});
+	//备注：jquery的写法：
+	//1）return false ：In event handler ,prevents default behavior and event bubbing 。
+	//return false 在事件的处理中，可以阻止默认事件和冒泡事件(相当于e.preventDefault()和e.stopPropagation()的集合)。
+	//2）event.preventDefault()：In event handler ,prevent default event (allows bubbling) 。
+	//event.preventDefault()在事件的处理中，可以阻止默认事件但是允许冒泡事件的发生。
+	///相当于return，不执行a的默认反应行为，但是时间冒泡还是继续
+	//3）event.stopPropagation()：In event handler ,prevent bubbling (allows default behavior).
+	//event.stopPropagation()在事件的处理中，可以阻止冒泡但是允许默认事件的发生
+	//也可以使用Event.stop(event)这个prototype写法
+
+	//IE下面的兼容写法
+	//如果提供了事件对象，则这是一个非IE浏览器
+/*	if ( e &amp;&amp; e.stopPropagation )
+　　// 因此它支持W3C的stopPropagation()方法
+　　e.stopPropagation();
+	else
+　　//否则，我们需要使用IE的方式来取消事件冒泡
+　　window.event.cancelBubble = true;*/
+
+</script>
+</html>

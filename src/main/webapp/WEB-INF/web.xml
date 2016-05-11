@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee :enabled" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+  <display-name>cmf_test</display-name>
+  
+  <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+    		<!-- classpath*:applicationContext*.xml -->
+    		/WEB-INF/conf/applicationContext-mvc.xml;
+    		/WEB-INF/conf/applicationContext-mybatis.xml;
+    		/WEB-INF/conf/applicationContext-quartz.xml
+		</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/conf/log4j.properties</param-value>
+	</context-param>
+	<context-param>
+		<param-name>log4jExposeWebAppRoot</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>10000</param-value>
+	</context-param>
+	<!-- 可以用System.getProperty("webapp.root")来获取项目路径 -->
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>webapp.root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>configOuterFlag</param-name>
+		<param-value>false</param-value>
+	</context-param> 
+	
+<!-- 	<filter>  这个是通过spring的Filter代理来实现多个过滤器
+		<filter-name>jresFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>jresFilter</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>jresFilter</filter-name>
+		<url-pattern>*.htm</url-pattern>
+	</filter-mapping> -->
+	
+	<filter>  
+      <filter-name>CharacterEncodingFilter</filter-name>  
+      <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>  
+      <init-param>  
+          <param-name>encoding</param-name>  
+          <param-value>utf-8</param-value>  
+      </init-param>  
+  	</filter>  
+  	<filter-mapping>  
+     	<filter-name>CharacterEncodingFilter</filter-name>  
+     	<url-pattern>/*</url-pattern>  
+ 	</filter-mapping>
+	
+	<!-- request 包装-->
+<!--     <filter>
+        <filter-name>commonFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.DelegatingFilterProxy
+		</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>commonFilter</filter-name>  
+        <url-pattern>*.htm</url-pattern>
+        <dispatcher>REQUEST</dispatcher>  
+        <dispatcher>FORWARD</dispatcher>  
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>commonFilter</filter-name>  
+        <url-pattern>*.json</url-pattern>
+        <dispatcher>REQUEST</dispatcher>  
+        <dispatcher>FORWARD</dispatcher>  
+    </filter-mapping> -->
+	<servlet>
+		<servlet-name>jresServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+		<init-param>  
+        <param-name>contextConfigLocation</param-name>  
+        <param-value>/WEB-INF/conf/Dispatcher-*.xml</param-value>  
+    </init-param> 
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>jresServlet</servlet-name>
+		<url-pattern>*.htm</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>jresServlet</servlet-name>
+		<url-pattern>*.json</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>jresServlet</servlet-name>
+		<url-pattern>*.xml</url-pattern>
+	</servlet-mapping>
+<!-- 监听器 -->
+	<!-- log4j配置 -->
+	<!-- 
+		Spring通过org.springframework.web.util.WebAppRootListener 这个监听器来运行时的项目路径。
+		但是如果在web.xml中已经配置了 org.springframework.web.util.Log4jConfigListener这个监听器，
+		则不需要配置WebAppRootListener了。因为Log4jConfigListener已经包含了WebAppRootListener的功能 
+	-->
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<!-- 处理由JavaBeans Introspector的使用而引起的缓冲泄露,一般在quartz和Struts 的框架里会产生缓冲泄漏问题，所以配置 -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextCleanupListener</listener-class>
+  </listener>
+  
+	<error-page>
+	  <error-code>404</error-code>
+	  <location>/404.html</location>
+	</error-page>
+	<error-page>
+    <error-code>500</error-code>
+    <location>/500.html</location>
+	</error-page>
+	<welcome-file-list>
+		<welcome-file>index.htm</welcome-file>
+	</welcome-file-list>
+</web-app>

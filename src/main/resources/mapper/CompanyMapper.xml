@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<!--这里是映射到接口文件-->
+<mapper namespace="mybatis.dao.CompanyDao">
+    <!-- javaType对应java类型， jdbcType只能填对象型参数 -->
+    <resultMap type="Company" id="companyResult" >
+      <result property="companyId"  column="company_id" javaType="int" jdbcType="INTEGER"/>
+      <result property="companyName"  column="company_name"/>
+    </resultMap>
+    <!--select表示这个sql语句是查询语句，增加删除修改同理，大家自己探索吧，id是要和接口里的方法名相同，
+	    也就是你要调用的那个方法，resultType就是返回的类型，login方法里我们返回的是User类，所以这里返回类
+	    型是User类，值得一提的是，此处的User就是mybatis.cfg.xml里的User，注意大小写！-->
+    <select id="queryCompany" resultType="Company" resultMap="companyResult">
+	    <!--这个就是平常的sql语句，#{username}代表login方法传进来的那个user参数里的username属性，
+	    #{password}也是一样，没有分号。-->
+	    SELECT company_id,company_name FROM pub_tcompany limit 10
+    </select>
+    <!-- keyProperty这边的返回自增id为实体类的属性名   -->
+    <insert id="addCompany" parameterType="Company">
+      <selectKey keyProperty="companyId" resultType="int" order="BEFORE">
+        select 22 as companyId from dual
+      </selectKey>
+      INSERT INTO pub_tcompany(company_id,company_name) VALUES (#{companyId},#{companyName})
+    </insert>
+</mapper>

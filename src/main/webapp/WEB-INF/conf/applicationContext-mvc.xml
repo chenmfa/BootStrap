@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:p="http://www.springframework.org/schema/p"    
+    xmlns:context = "http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+            http://www.springframework.org/schema/context 
+            http://www.springframework.org/schema/context/spring-context-3.2.xsd
+            http://www.springframework.org/schema/tx   
+            http://www.springframework.org/schema/tx/spring-tx-3.2.xsd  
+            http://www.springframework.org/schema/mvc   
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task-3.2.xsd"
+    default-autowire="byName">
+    <!-- 激活组件扫描功能，扫描项目下面的所有文件  -->
+    <context:component-scan base-package="*" />
+    
+        <!-- ControllerClassNameHandlerMapping用于匹配我们的Controller -->     
+		<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />  
+		  
+		<!-- 使用annocation创建Controller的bean -->  
+		<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>       
+
+	  <bean id="propertyConfigurer" 
+	    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	      <property name="locations">
+	       <list><!-- <value>classpath*:jdbc.properties</value> -->
+	        <!-- <value>file:src/main/webapp/WEB-INF/conf/jdbc.properties</value> 这个用于在java里面 run application的 -->
+	        <value>/WEB-INF/conf/jdbc.properties</value>
+	       </list>                    
+	      </property>
+	    <!-- 当放在web-inf目录下时，需要用file来命名,classpath则不用 -->
+	    <!-- <property name="location" value="classpath:jdbc.properties" /> -->
+	     
+	 <!--    spring只是默认把当前自身文件存在的目录当成了classpath目录,
+	                  所以当有文件跟他在一起时，按ctrl是能关联到的 而且这里不能用classpath*, 无法读取 -->
+	    <!-- <property name="location" value="classpath*:mybatis.cfg.xml"></property> -->
+	  </bean>
+	  <!-- 取消导入，防止重复加载 -->
+	  <!-- <import resource="applicationContext-mybatis.xml"/> -->
+		
+		<!-- 动态代理处理器 -->     
+	  <bean id="securityHandler" class="mybatis.dynamicproxy.SecurityHandler"></bean>
+	  
+	  
+	  <bean id="proxyManager" class="mybatis.dynamicproxy.impl.ProxyManagerImpl"></bean>
+	  <!-- aop动态代理的应用,可以学习相关源码与cglib辅助理解 -->
+	  <!-- 这句也可以不写spring会用到CGLIB,但必须导入库
+	    <aop:aspectj-autoproxy proxy-target-class="true" /> 
+	    -->
+	  <aop:config>
+	    <aop:aspect id="myaspect" ref="securityHandler"><!-- 这里配置的是切面执行的方法 -->
+	      <aop:pointcut expression="execution(* mybatis.dynamicproxy.impl.*.*(..))" id="allMethod"/>
+	      <aop:before method="setDynamicDataSource" pointcut-ref="allMethod"/>
+	      <!-- <aop:around method="checkSecurity" pointcut-ref="allMethod"/> -->
+	      
+	      <!-- @before @end 
+	       @around： 值在当前方法调用的前和后 
+	       @AfterReturning: 后置返回通知
+	       @AfterThrowing: 抛出异常后
+	       //注解配置的灵活性示例
+	       @Before("aspect()&&args(id)") //配置前置通知,拦截含有long类型参数的方法,并将参数值注入到当前方法的形参id中
+         public void beforeArgId(JoinPoint joinPoint, long id)
+         //配置前置通知,拦截参数为cn.ysh.studio.spring.mvc.bean.User的方法
+         @Before("execution(* cn.ysh.studio.spring.aop.service..*(cn.ysh.studio.spring.mvc.bean.User))")
+         public void beforeArgUser(JoinPoint joinPoint)
+         //配置前置通知,拦截返回值为cn.ysh.studio.spring.mvc.bean.User的方法
+         @Before("execution(cn.ysh.studio.spring.mvc.bean.User cn.ysh.studio.spring.aop.service..*(..))")
+         public void beforeReturnUser(JoinPoint joinPoint){
+         //表达式格式
+         execution(modifiers-pattern? ret-type-pattern declaring-type-pattern? name-pattern(param-pattern) throws-pattern?) 
+				 modifiers-pattern：方法的操作权限
+				 ret-type-pattern：返回值
+				 declaring-type-pattern：方法所在的包
+				 name-pattern：方法名
+				 parm-pattern：参数名
+				 throws-pattern：异常
+				 
+				 AOP作用   1. Authentication 权限
+								2.  Caching 缓存
+								3.  Context passing 内容传递
+								4.  Error handling 错误处理
+								5.  Lazy loading 懒加载
+								6.  Debugging 调试
+								7.  logging, tracing, profiling and monitoring 记录跟踪 优化 校准
+								8.  Performance optimization 性能优化
+								9.  Persistence 持久化
+								10. Resource pooling 资源池
+								11. Synchronization 同步
+								12. Transactions 事务
+				Spring AOP（动态）：通过代理程序运行时织入
+				优点：简单，易用
+				缺点：性能略低，仅适用于方法调用，必须在Spring容器
+				
+				Aspect J（静态）：通过修改程序的字节码完成织入
+				优点：性能好，功能强大，无需Spring容器
+				缺点：修改需要重新编译，要引入Aspect J的编译器／织入器，复杂
+	       -->
+	    </aop:aspect>
+	  </aop:config> 
+	  
+	  <mvc:interceptors>
+	     <!-- <mvc:interceptor> --><!-- 这样可以配置多个，单个的话，最外层其实可以去掉 -->
+	      <!--  <mvc:mapping path="/"/>/user/* -->
+	       <bean class="learn.base.interceptor.MyInterceptor"/>
+	     <!-- </mvc:interceptor> -->
+	  </mvc:interceptors>
+	  
+	  
+  <bean id="htmlEscapingObjectMapper" class="learn.base.mapper.HtmlEscapingObjectMapperFactory" />
+	
+	 <!-- 将对象和json之间转换 -->
+	  <!--<bean id="mappingJacksonHttpMessageConverter"
+	  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" >
+	  <property name="supportedMediaTypes">
+	    <list>
+	    	<value>text/plain;charset=UTF-8</value>
+	      <value>text/html;charset=UTF-8</value>
+	      <value>text/json;charset=UTF-8</value>
+	      <value>application/json;charset=UTF-8</value>
+	    </list>
+	  </property>
+	</bean> -->
+  <mvc:annotation-driven>
+    <mvc:message-converters>
+        <!-- <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" p:objectMapper-ref="htmlEscapingObjectMapper" /> -->
+    
+        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+          <property name="supportedMediaTypes">
+            <list>
+							<value>text/plain;charset=UTF-8</value>
+							<value>text/html;charset=UTF-8</value>
+							<value>text/json;charset=UTF-8</value>
+							<value>application/json;charset=UTF-8</value>
+            </list>
+          </property>
+          <property name="objectMapper">
+            <bean class="learn.base.mapper.MyObjectMapper"/>
+          </property>
+        </bean>   
+    </mvc:message-converters>
+  </mvc:annotation-driven>
+
+ <!-- <mvc:default-servlet-handler/>   --> 
+  
+</beans>
