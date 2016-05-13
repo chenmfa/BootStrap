@@ -86,7 +86,7 @@ public class GtTemplateFactory {
 				url = msgArr[4];
 				tips = msgArr[5];
 			}
-			logger.info("The message is:"+msgArr.toString());
+			logger.info("The message is:"+text);
 			/*String message ="{\"aps\":{\"alert\": \""+msgArr[3]+"\"},\"userid\":\""+getProperty(map,"account","")+"\"," +
 					"\"nickname\":\""+getProperty(map,"nickName","")+"\",\"messageid\":\""+msgArr[0]+"\",\"macaddress\":\""+msgArr[1]+"\"," +
 					"\"devicename\":\"\",\"url\":\""+url+"\",\"tips\":\""+tips+"\"}";*/

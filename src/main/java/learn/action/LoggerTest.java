@@ -32,6 +32,7 @@ public class LoggerTest {
 	@ResponseBody
 	public String sendMsg(final String cid, HttpServletRequest request){
 
+
 		new Thread(new GeTuiPush(new HashMap<String,String>(){
 
       private static final long serialVersionUID = 1L;
@@ -40,6 +41,7 @@ public class LoggerTest {
       }
 			
 		})).start();
+
 		return "succeed";
 	}
 }

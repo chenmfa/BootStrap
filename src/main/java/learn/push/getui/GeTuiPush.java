@@ -38,10 +38,10 @@ public class GeTuiPush implements Runnable{
 		properties.putAll(new HashMap<String,String>(){
 			private static final long serialVersionUID = 330781199007134865L;
 			{
-				put("text", "103|E7:2F:A7:78:4C:3B|锁具名称|温馨提醒：ccccc有个家伙正在尝试打开你家锁具，请注意，请注意！");
+				put("text", "101|15257121663|枫哥的世界|您的账号在其他地方上线，请重新登录，修改密码");
 				put("openUrl","www.dessmann.com.cn");
 				put("deviceType","ios");
-				put("account","13757150532");
+				put("account","15257121663");
 			}
 		});
 	  //useSSL表明是使用ssl传输还是普通http传输
@@ -72,12 +72,13 @@ public class GeTuiPush implements Runnable{
     try {
 	    result = push.pushMessageToSingle(singleMessage, target);
     } catch (PushSingleException e) {
-	    e.printStackTrace();
+	    logger.error(e.getMessage(),e);
 	    result = push.pushMessageToSingle(singleMessage, target, e.getRequestId());
     } catch (Exception e){
-    	e.printStackTrace();
+    	logger.error(e.getMessage(),e);
     }
-	  
-    logger.info(result.getResponse().toString());
+	  String msg = result.getResponse().toString();
+    logger.info(msg);
+    //return msg;
 	}
 }

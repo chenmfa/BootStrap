@@ -1,0 +1,123 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (virtualspace.cpp:125), pid=11960, tid=6932
+#  fatal error: os::release_memory failed
+#
+# JRE version:  (7.0_71-b14) (build )
+# Java VM: Java HotSpot(TM) Client VM (24.71-b01 mixed mode windows-x86 )
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x01c3f000):  JavaThread "Unknown thread" [_thread_in_vm, id=6932, stack(0x02470000,0x024c0000)]
+
+Stack: [0x02470000,0x024c0000],  sp=0x024bf36c,  free space=316k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x1911e4]
+V  [jvm.dll+0x18ae66]
+V  [jvm.dll+0x166efc]
+V  [jvm.dll+0x1673bb]
+V  [jvm.dll+0x8acf6]
+V  [jvm.dll+0x887c6]
+V  [jvm.dll+0x8750e]
+V  [jvm.dll+0x918c3]
+V  [jvm.dll+0x1407f4]
+V  [jvm.dll+0x16341c]
+V  [jvm.dll+0xca7bf]
+C  [javaw.exe+0x13ce]
+C  [javaw.exe+0x1e40]
+C  [javaw.exe+0xa601]
+C  [javaw.exe+0xa68b]
+C  [kernel32.dll+0x1338a]
+C  [ntdll.dll+0x39902]
+C  [ntdll.dll+0x398d5]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x01c3f000 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=6932, stack(0x02470000,0x024c0000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00270000 - 0x0029f000 	D:\Software\LearningSoftware\Java\jre7\bin\javaw.exe
+0x77360000 - 0x774e0000 	C:\Windows\SysWOW64\ntdll.dll
+0x769d0000 - 0x76ae0000 	C:\Windows\syswow64\kernel32.dll
+0x761b0000 - 0x761f7000 	C:\Windows\syswow64\KERNELBASE.dll
+0x765c0000 - 0x76661000 	C:\Windows\syswow64\ADVAPI32.dll
+0x75240000 - 0x752ec000 	C:\Windows\syswow64\msvcrt.dll
+0x750f0000 - 0x75109000 	C:\Windows\SysWOW64\sechost.dll
+0x76dc0000 - 0x76eb0000 	C:\Windows\syswow64\RPCRT4.dll
+0x74cb0000 - 0x74d10000 	C:\Windows\syswow64\SspiCli.dll
+0x74ca0000 - 0x74cac000 	C:\Windows\syswow64\CRYPTBASE.dll
+0x764c0000 - 0x765c0000 	C:\Windows\syswow64\USER32.dll
+0x76430000 - 0x764c0000 	C:\Windows\syswow64\GDI32.dll
+0x75f70000 - 0x75f7a000 	C:\Windows\syswow64\LPK.dll
+0x74ff0000 - 0x7508d000 	C:\Windows\syswow64\USP10.dll
+0x72e40000 - 0x72fde000 	C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.18837_none_41e855142bd5705d\COMCTL32.dll
+0x74f80000 - 0x74fd7000 	C:\Windows\syswow64\SHLWAPI.dll
+0x74d30000 - 0x74d90000 	C:\Windows\system32\IMM32.DLL
+0x75170000 - 0x7523c000 	C:\Windows\syswow64\MSCTF.dll
+0x6d790000 - 0x6d84f000 	D:\Software\LearningSoftware\Java\jre7\bin\msvcr100.dll
+0x64660000 - 0x649e9000 	D:\Software\LearningSoftware\Java\jre7\bin\client\jvm.dll
+0x6f8a0000 - 0x6f8a7000 	C:\Windows\system32\WSOCK32.dll
+0x76860000 - 0x76895000 	C:\Windows\syswow64\WS2_32.dll
+0x76ec0000 - 0x76ec6000 	C:\Windows\syswow64\NSI.dll
+0x732e0000 - 0x73312000 	C:\Windows\system32\WINMM.dll
+0x77330000 - 0x77335000 	C:\Windows\syswow64\PSAPI.DLL
+0x70fd0000 - 0x70fdc000 	D:\Software\LearningSoftware\Java\jre7\bin\verify.dll
+0x70fb0000 - 0x70fd0000 	D:\Software\LearningSoftware\Java\jre7\bin\java.dll
+0x70f90000 - 0x70fa3000 	D:\Software\LearningSoftware\Java\jre7\bin\zip.dll
+0x722c0000 - 0x723ab000 	C:\Windows\system32\dbghelp.dll
+
+VM Arguments:
+jvm_args: -Xms512m -Xmx512m -Dfile.encoding=UTF-8 
+java_command: test.Test
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=D:\Software\LearningSoftware\Java\jdk1.7.0_71
+PATH=D:/Software/LearningSoftware/Java/jre1.6.0_03/bin/client;D:/Software/LearningSoftware/Java/jre1.6.0_03/bin;D:/Software/LearningSoftware/Java/jre1.6.0_03/lib/i386;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;D:\Software\LearningSoftware\apache-maven-3.2.1\bin;D:\Software\LearningSoftware\Java\jdk1.7.0_71\bin;D:\Software\LearningSoftware\Java\jdk1.7.0_71\jre\bin;D:\Software\LearningSoftware\eclipse;
+USERNAME=Sub
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 58 Stepping 9, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7601 Service Pack 1
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 58 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, erms, ht, tsc, tscinvbit, tscinv
+
+Memory: 4k page, physical 10164836k(2914752k free), swap 25119232k(18452k free)
+
+vm_info: Java HotSpot(TM) Client VM (24.71-b01) for windows-x86 JRE (1.7.0_71-b14), built on Sep 26 2014 16:30:49 by "java_re" with unknown MS VC++:1600
+
+time: Wed May 04 17:00:48 2016
+elapsed time: 0 seconds
+
