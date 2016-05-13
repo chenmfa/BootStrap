@@ -15,6 +15,12 @@ import com.gexin.rp.sdk.http.IGtPush;
 import com.gexin.rp.sdk.template.LinkTemplate;
 import com.gexin.rp.sdk.template.TransmissionTemplate;
 
+
+/**
+ * @author chenmfa
+ * @description 传入参数： baiduChannelId,text,
+ * @description 可选参数： transmissionType，(phoneType,account,nickName(判断ios还是android)),badge,contentAvailable,sound
+ */
 public class GeTuiPush implements Runnable{
 	
 	private static Logger logger = LoggerFactory.getLogger(GeTuiPush.class);
