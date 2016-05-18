@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,8 @@ public class Test {
 	private static final Logger logger = LoggerFactory.getLogger(Test.class);
 	
   public static void main(String[] args) throws IOException, SQLException{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		System.out.println(formatter.format(null));
   	String regesxxx ="{\"username\":\"sss\",\"password\":\"dddd\"}";
   	//对于正则表达式， \\数字表示对应的捕获组 ?:表示不捕获，?<quoteb>表示别名
   	//\k<name> 表示引用命名为 name 的捕获组捕获到的内容，在Java7 中；
