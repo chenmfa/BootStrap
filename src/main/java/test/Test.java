@@ -21,6 +21,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -39,6 +41,46 @@ public class Test {
 	private static final Logger logger = LoggerFactory.getLogger(Test.class);
 	
   public static void main(String[] args) throws IOException, SQLException{
+  	StringBuffer unicode = new StringBuffer();
+  	 String sdasdad ="yao jie(15958125171)";
+    for (int i = 0; i < sdasdad.length(); i++) {
+ 
+        // 取出每一个字符
+        char c = sdasdad.charAt(i);
+ 
+        // 转换为unicode
+        unicode.append("\\u" + Integer.toHexString(c));
+    }
+  	
+    System.out.println(unicode);
+		System.out.println("2超级管理员386130459708447.png".startsWith("2超级管理员"));
+  	System.out.println("D:\\Software\\LearningSoftware\\apache-tomcat-7.0.42\\webapps\\base\\upload/workeruserphoto/2超级管理员385523540708073.png".length());
+  	String qrText ="http://dsmjd.com/?x=lock520|11111111|E5:3F:33:43:88:EC|lock";
+  	String macStrWithOutSplit="E53:F334388EC";
+  	String lockType = "普通锁";
+  	if("普通锁".equals(lockType)){
+			int equalIndex = qrText.indexOf("=");
+			if(equalIndex>0){
+				String variable = qrText.split("=")[1];
+				String qrTextMacAddress = variable.split("\\|")[2].replace(":", "");
+				if(!qrTextMacAddress.equals(macStrWithOutSplit)){
+					System.out.println("生成的二维码的MAC地址与二维码下方的MAC地址出现不一致，请重新操作或者联系波波");
+					return ;
+				}
+			}else{
+				System.out.println("需要打印的二维码不正确");
+				return ;
+			}
+		}
+  	for(int i=1;i<12;i++){
+  		System.out.print((40+i*27)+" ");
+  	}
+  	System.out.println("DF-FE-2C-8B-23-87".length());
+  	JOptionPane.showMessageDialog(null, "MAC地址读取出错，请重试", "MAC地址读取出错，请重试", JOptionPane.WARNING_MESSAGE); 
+  	Object[] options = { "确定"}; 
+  	JOptionPane.showOptionDialog(null, "MAC地址读取出错，请重试", "Warning", 
+  			JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, 
+  			null, options, options[0]); 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 		System.out.println(formatter.format(null));
   	String regesxxx ="{\"username\":\"sss\",\"password\":\"dddd\"}";

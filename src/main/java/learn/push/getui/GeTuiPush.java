@@ -2,6 +2,7 @@ package learn.push.getui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import com.gexin.rp.sdk.base.impl.SingleMessage;
 import com.gexin.rp.sdk.base.impl.Target;
 import com.gexin.rp.sdk.exceptions.PushSingleException;
 import com.gexin.rp.sdk.http.IGtPush;
-import com.gexin.rp.sdk.template.LinkTemplate;
 import com.gexin.rp.sdk.template.TransmissionTemplate;
 
 
@@ -21,7 +21,7 @@ import com.gexin.rp.sdk.template.TransmissionTemplate;
  * @description 传入参数： baiduChannelId,text,
  * @description 可选参数： transmissionType，(phoneType,account,nickName(判断ios还是android)),badge,contentAvailable,sound
  */
-public class GeTuiPush implements Runnable{
+public class GeTuiPush implements Runnable,Callable<String>{
 	
 	private static Logger logger = LoggerFactory.getLogger(GeTuiPush.class);
 	
@@ -39,8 +39,12 @@ public class GeTuiPush implements Runnable{
   public void run() {
   	push(properties);
   }
+  public String call() throws Exception {
+  	return push(properties);
+  }
 	
-	public void push(Map<String, String> properties){
+	public String push(Map<String, String> properties){
+		StringBuilder sb =new StringBuilder();
 		properties.putAll(new HashMap<String,String>(){
 			private static final long serialVersionUID = 330781199007134865L;
 			{
@@ -80,11 +84,14 @@ public class GeTuiPush implements Runnable{
     } catch (PushSingleException e) {
 	    logger.error(e.getMessage(),e);
 	    result = push.pushMessageToSingle(singleMessage, target, e.getRequestId());
+	    sb.append(e.getMessage());
     } catch (Exception e){
     	logger.error(e.getMessage(),e);
+    	sb.append(e.getMessage());
     }
 	  String msg = result.getResponse().toString();
     logger.info(msg);
-    //return msg;
+    sb.append("success");
+    return sb.toString();
 	}
 }

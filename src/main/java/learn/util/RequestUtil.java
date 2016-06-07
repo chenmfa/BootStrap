@@ -39,6 +39,16 @@ public class RequestUtil {
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
+		//对于本地地址,有时候会显示成ipv6的
+		if(null != ip && (ip.equals("0:0:0:0:0:0:0:1") || ip.equals("127.0.0.1"))){
+		  InetAddress address = null;
+		  try {
+	      address = InetAddress.getLocalHost();
+	      ip = address.getHostAddress();
+      } catch (UnknownHostException e){
+      	ip= "127.0.0.1";
+      }
+		}
 		return ip;
 	}
 	
@@ -74,7 +84,7 @@ public class RequestUtil {
 		    //String macPrefix = "MAC 地址 =";
 	    	String macPrefix = ip;
 	    	while((line = bfr.readLine()) != null){
-	        logger.info(line);
+	        //logger.info(line);
 	    		int index= line.indexOf(macPrefix);
 	    		if(index !=-1){
 	    			String macAddress = line.substring(index + macPrefix.length()).trim().toUpperCase();  
