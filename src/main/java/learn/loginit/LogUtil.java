@@ -109,7 +109,7 @@ public class LogUtil {
 			map.put((null!=name)?name:"",(null != level)?level.toString():"");  
 //		loggers.add(logger);  
     }        
-    return map;  
+    return map; 
   }
   
   /**
