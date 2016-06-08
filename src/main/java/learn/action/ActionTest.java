@@ -1,7 +1,6 @@
 package learn.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -35,9 +34,17 @@ public class ActionTest {
 	public String testLogger(){
 		logger.info("Info test");
 		logger.error("Logger Error Test");
+		logger.debug("debugMsg");
 		return "succeed";
 	}
 	
+	/**
+	 * @param cid 个推的用户id
+	 * @param request httprequest请求
+	 * @return String
+	 * @throws Exception
+	 * @description
+	 */
 	@RequestMapping("sendMsg.json")
 	@ResponseBody
 	public String sendMsg(final String cid, HttpServletRequest request) throws Exception{
@@ -59,15 +66,35 @@ public class ActionTest {
 		return result;
 	}
 	
+	/**
+	 * @param actionType
+	 * @param action
+	 * @return JSONString
+	 * @description 修改运行时的日志级别，1为查看所有存在的日志，2为修改root日志级别
+	 */
 	@RequestMapping("logger.json")
 	@ResponseBody
-	public Object logger(int actionType,String action){
-		if(actionType==1){
-			List<org.apache.log4j.Logger> logList = LogUtil.getLogList();
-			return JSON.toJSONString(logList);
-		}else if(actionType==2){
-			
+	public String logger(int actionType,String action){
+		String result = "";
+		switch(actionType){
+			case 1:
+				Map<String,String> logList = LogUtil.getLogList();
+				for(Map.Entry<String,String> entry: logList.entrySet()){
+					System.out.println(entry.getKey()+"----"+entry.getValue());
+				}
+				result = JSON.toJSONString(logList);
+				break;
+			case 2:
+				result = JSON.toJSONString(LogUtil.getLogList(true));
+				break;
+			case 3:
+				LogUtil.changeLogger("root", action);
+				result= "成功";
+				break;
+			default:
+				result = "请求类型非法";
+				break;
 		}
-		return "sunncee";
+		return result;
 	}
 }

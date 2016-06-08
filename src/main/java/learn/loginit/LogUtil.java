@@ -3,6 +3,7 @@ package learn.loginit;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -87,21 +88,28 @@ public class LogUtil {
 	  * @return List<Logger>
 	  * @description 获取当前的日志列表
 	  */
-  public static List<Logger> getLogList(){  
+  public static Map<String,String> getLogList(boolean... allLog){  
     //日志列表  
-    List<Logger> loggers = new ArrayList<Logger>();  
+//    List<Logger> loggers = new ArrayList<Logger>();
+  	Map<String,String> map = new HashMap<String, String>();
     //获取根日志  
     Logger rootLogger = Logger.getRootLogger();       
-    loggers.add(rootLogger);  
-              
+    //loggers.add(rootLogger);  
+    map.put(rootLogger.getName(),rootLogger.getLevel().toString());        
     //获取当前所有的日志对象  
     Enumeration<Logger> enumer = (Enumeration<Logger>)rootLogger.getLoggerRepository().getCurrentLoggers();               
     while(enumer.hasMoreElements())  
     {  
-			Logger logger = enumer.nextElement();
-			loggers.add(logger);  
+			Logger childlogger = enumer.nextElement();
+			String name = childlogger.getName();
+			Level level = childlogger.getLevel();
+			if(null ==level && (allLog.length == 0 || !allLog[0])){
+				continue;
+			}
+			map.put((null!=name)?name:"",(null != level)?level.toString():"");  
+//		loggers.add(logger);  
     }        
-    return loggers;  
+    return map;  
   }
   
   /**
