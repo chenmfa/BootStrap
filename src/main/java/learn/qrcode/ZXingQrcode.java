@@ -26,9 +26,9 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 public class ZXingQrcode {
 	
 	//二维码颜色
-	private int qrcodeColor = 0xFF000000;//0xFF000000的颜色为红色
+	private static int qrcodeColor = 0xFF000000;//0xFF000000的颜色为红色
 	//二维码背景色（指的是不填充时的色）
-	private int backgroundColor = 0xFFFFFFFF; //0xFFFF0000
+	private static int backgroundColor = 0xFFFFFFFF; //0xFFFF0000
 	
 	//默认的高度和宽度
 	private int width = 300;
@@ -78,7 +78,7 @@ public class ZXingQrcode {
 		int matrixHeight = matrix.getHeight();
 		for(int x=0;x< matrixWidth; x++){
 			for(int y =0; y< matrixHeight; y++){
-				image.setRGB(x, y, matrix.get(x, y)?qrcodeColor:backgroundColor);
+				image.setRGB(x, y, matrix.get(x, y)?qrcodeColor:0x999999);
 			}
 		}
 		
@@ -123,7 +123,7 @@ public class ZXingQrcode {
 		ZXingQrcode zq = new ZXingQrcode();
 		//用.或者不加参数获取类路径，用/获取classPath 路径
 		String clasPath =ZXingQrcode.class.getResource("/").getPath();		
-		String contents ="陈苗发";
+		String contents ="欢迎使用充电设备";
 		File f = new File(clasPath+"output/qrCode.jpg");
 		if(!f.getParentFile().exists()){
 			f.mkdirs();

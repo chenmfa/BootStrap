@@ -41,6 +41,7 @@ public class Test {
 	private static final Logger logger = LoggerFactory.getLogger(Test.class);
 	
   public static void main(String[] args) throws IOException, SQLException{
+  	System.out.println(System.currentTimeMillis()/1000);
   	StringBuffer unicode = new StringBuffer();
   	 String sdasdad ="yao jie(15958125171)";
     for (int i = 0; i < sdasdad.length(); i++) {
