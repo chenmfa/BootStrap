@@ -299,7 +299,25 @@
 		    <groupId>org.apache.httpcomponents</groupId>
 		    <artifactId>httpclient</artifactId>
 		    <version>4.5.2</version>
-		</dependency>			
+		</dependency>
+<!-- 		 https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.54</version>
+		</dependency>
+		https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16
+		<dependency>
+	    <groupId>org.bouncycastle</groupId>
+	    <artifactId>bcprov-jdk16</artifactId>
+	    <version>1.46</version>
+		</dependency>
+		https://mvnrepository.com/artifact/bouncycastle/bcprov-jdk15
+		<dependency>
+		    <groupId>bouncycastle</groupId>
+		    <artifactId>bcprov-jdk15</artifactId>
+		    <version>140</version>
+		</dependency> -->
   </dependencies>
   <build>
 		<plugins>

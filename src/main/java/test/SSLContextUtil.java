@@ -57,7 +57,7 @@ public class SSLContextUtil {
         try {
             sslContext = SSLContext.getInstance("TLS");
             // 加载证书流, 这里证书需要放在assets下
-            InputStream inputStream = new FileInputStream(new File("D:\\tomcatcert\\client.p12"));
+            InputStream inputStream = new FileInputStream(new File("D:\\tomcatcert\\client.ks"));
             		//App.getInstance().getAssets().open("srca.cer");
 
             // 生成证书
@@ -65,7 +65,7 @@ public class SSLContextUtil {
             
 
             // 加载证书到KeyStore
-            KeyStore keyStore = KeyStore.getInstance("PKCS12");
+            KeyStore keyStore = KeyStore.getInstance("jks");
             keyStore.load(inputStream,"123456".toCharArray());
             //Certificate cer = cerFactory.generateCertificate(inputStream);
             Certificate cer = keyStore.getCertificate("clientKey");
@@ -73,7 +73,7 @@ public class SSLContextUtil {
 
             // 把KeyStore放入keyManagerFactory
             KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            keyManagerFactory.init(keyStore, null);
+            keyManagerFactory.init(keyStore, "123456".toCharArray());
 
             // KeyStore加入TrustManagerFactory
             TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());

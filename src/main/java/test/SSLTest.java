@@ -19,9 +19,9 @@ public class SSLTest {
 	    System.setProperty("javax.net.ssl.trustStore", "D:\\tomcatcert\\client.ks");
 	    System.setProperty("javax.net.ssl.trustStorePassword","123456");
 	    
-	    System.setProperty("javax.net.ssl.keyStore", "D:\\tomcatcert\\client.p12");
+	    System.setProperty("javax.net.ssl.keyStore", "D:\\tomcatcert\\client.ks");
       System.setProperty("javax.net.ssl.keyStorePassword","123456");
-      System.setProperty("javax.net.ssl.keyStoreType", "PKCS12");
+      //System.setProperty("javax.net.ssl.keyStoreType", "PKCS12");
 	    // 主机名称验证策略
 	    // 主机名称验证策略
       HttpsURLConnection.setDefaultHostnameVerifier(new TrustAnyVerifier());

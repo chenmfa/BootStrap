@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.lang.StringUtils;
+//import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -41,6 +42,8 @@ public class Test {
 	private static final Logger logger = LoggerFactory.getLogger(Test.class);
 	
   public static void main(String[] args) throws IOException, SQLException{
+  	//BouncyCastleProvider bcs = new BouncyCastleProvider();
+  	System.out.println(System.getProperty("java.class.path"));
   	System.out.println(System.currentTimeMillis()/1000);
   	StringBuffer unicode = new StringBuffer();
   	 String sdasdad ="yao jie(15958125171)";
