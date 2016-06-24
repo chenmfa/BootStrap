@@ -1,4 +1,4 @@
-package test;
+package learn.encryption.ssl;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -11,9 +11,9 @@ import javax.net.ssl.SSLSession;
 /**
  * @author chenmfa
  * @date 创建时间: 2016-6-21 下午4:11:18
- * @description
+ * @description java端获取ssl双向验证
  */
-public class SSLTest {
+public class SimpleJavaHttps {
   public static void main(String[] args) {
     try {
 	    System.setProperty("javax.net.ssl.trustStore", "D:\\tomcatcert\\client.ks");

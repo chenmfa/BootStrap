@@ -1,4 +1,4 @@
-package test;
+package learn.encryption.ssl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +13,7 @@ import java.util.Enumeration;
  * @date 创建时间: 2016年6月23日 上午10:18:06
  * @description
  */
-public class NewSSl {
+public class SSlPrivate {
 	
 	private static X509Certificate[] mX509Certificates;
 	private static PrivateKey mPrivateKey;	

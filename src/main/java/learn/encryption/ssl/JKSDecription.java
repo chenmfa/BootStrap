@@ -1,4 +1,4 @@
-package learn.encryption;
+package learn.encryption.ssl;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

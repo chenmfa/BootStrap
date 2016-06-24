@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package test;
+package learn.encryption.ssl;
 
 /*import android.annotation.SuppressLint;
 
@@ -41,15 +41,63 @@ import javax.net.ssl.X509TrustManager;
  * Created in Jan 31, 2016 8:03:59 PM.
  *
  * @author Yan Zhenjie.
+ * @author chenmfa
+ * @description SSLContext 设置https双向验证
  */
-public class SSLContextUtil {
+public class SSLContext_Https {
+  private static SSLContext sslContext = null;	
 	
 		public static void main(String[] args) {
-			getSSLContext();
+			getSSLContext2();
     }
+		
+		 public static SSLContext getSSLContext2() {
+       if (sslContext != null) {
+           return sslContext;
+       }
+       try {
+           // 加载证书流, 这里证书需要放在assets下
+           //InputStream inputStream = App.getInstance().getAssets().open("serverkey.cer");
+      	 	 InputStream inputStream =  new FileInputStream(new File("D:\\tomcatcert\\serverkey.cer"));
+           // 生成证书
+           CertificateFactory cerFactory = CertificateFactory.getInstance("X.509");
+           Certificate cer = cerFactory.generateCertificate(inputStream);
+           // 加载证书到KeyStore
+           KeyStore keyStore = KeyStore.getInstance("jks");//在eclipse这边改成了jks，android用PKCS12不知道为什么没问题，待研究
+           keyStore.load(null, null);
+           keyStore.setCertificateEntry("trust", cer);
+
+           // KeyStore加入TrustManagerFactory
+           TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+           trustManagerFactory.init(keyStore);
+           
+           sslContext = SSLContext.getInstance("TLS");
+
+           //初始化clientKeyStore(android端只支持bks)
+           //KeyStore clientKeyStore = KeyStore.getInstance("BKS");
+           KeyStore clientKeyStore = KeyStore.getInstance("jks");
+           //clientKeyStore.load(App.getInstance().getAssets().open("clientkey.bks"), "123456".toCharArray());
+           clientKeyStore.load(new FileInputStream(new File("D:\\tomcatcert\\client.ks")), "123456".toCharArray());
+
+           // 把初始化clientKeyStore放入keyManagerFactory
+           KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+           keyManagerFactory.init(clientKeyStore, "123456".toCharArray());
+
+           // 初始化SSLContext
+           sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+
+       return sslContext;
+   }
 
     /**
-     * 拿到https证书, SSLContext (NoHttp已经修补了系统的SecureRandom的bug)。
+     * @description java端的SSLContext
+     * @description 拿到https证书, SSLContext (NoHttp已经修补了系统的SecureRandom的bug)。
+     * @description 这里由于在client.ks里面导入了server端的公钥，加上客户端自己的密钥，
+     * @description 所以可以用一个文件，实际上呢最好分开便于理解
+     * @description 安卓端参见上面的getSSLContext2()
      */
     //@SuppressLint("TrulyRandom")
     public static SSLContext getSSLContext() {
@@ -57,7 +105,7 @@ public class SSLContextUtil {
         try {
             sslContext = SSLContext.getInstance("TLS");
             // 加载证书流, 这里证书需要放在assets下
-            InputStream inputStream = new FileInputStream(new File("D:\\tomcatcert\\client.ks"));
+            InputStream inputStream = new FileInputStream(new File("D:\\tomcatcert\\server.ks"));
             		//App.getInstance().getAssets().open("srca.cer");
 
             // 生成证书
