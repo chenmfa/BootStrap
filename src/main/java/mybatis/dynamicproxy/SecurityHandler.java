@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import javax.servlet.http.HttpServletRequest;
+
 import learn.annotation.CacheableService;
 import learn.redis.RedisUtil;
 import learn.util.MD5Encrypt;
@@ -13,6 +15,8 @@ import mybatis.datasource.DataSourceHolder;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -96,6 +100,7 @@ public class SecurityHandler /*implements MethodInterceptor*/{
         ||methodName.startsWith("del")||methodName.startsWith("edit")  
         ||methodName.startsWith("insert")||methodName.startsWith("save")  
         ||methodName.startsWith("update")||methodName.startsWith("modeify")){
+    	HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
     	DataSourceHolder.setSlaveSource();
     }else{
     	DataSourceHolder.setMasterSource();
