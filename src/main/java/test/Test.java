@@ -42,6 +42,7 @@ public class Test {
 	private static final Logger logger = LoggerFactory.getLogger(Test.class);
 	
   public static void main(String[] args) throws IOException, SQLException{
+  	System.out.println("13585425616".matches("((13[0-9])|(15[^4,\\D])|(18[0-9])|(17[6-8])|(17[0|1|3])|(147))\\d{8}$"));
   	//BouncyCastleProvider bcs = new BouncyCastleProvider();
   	System.out.println(System.getProperty("java.class.path"));
   	System.out.println(System.currentTimeMillis()/1000);

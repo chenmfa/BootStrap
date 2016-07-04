@@ -87,7 +87,8 @@ public class RequestUtil {
 	        //logger.info(line);
 	    		int index= line.indexOf(macPrefix);
 	    		if(index !=-1){
-	    			String macAddress = line.substring(index + macPrefix.length()).trim().toUpperCase();  
+	    		  String[] arr = line.trim().split("\\s+");
+	    			String macAddress = arr[1].trim().replaceAll("-", ":").toUpperCase();  
 	    			return macAddress;
 	    		}
 	    	}
