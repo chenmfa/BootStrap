@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><!-- 中文:UTF-8 简体中文:GBK2312 繁体中文:BIG5  英文:ISO8859-1-->
-<meta name="author" content="陈苗发"/>
-<meta name="keywords" content="chenmfa" />
-<meta name="description" content="测试用ajax访问页面的方法来实现ping"/>
-<meta http-equiv="Window-target" content="_top" /><!-- 防止页面被别人调用，所以将页面设置为最上面 -->
-<meta http-equiv="Refresh" content="100;URL=https://www.baidu.com">
-<!--用于搜索引擎 
-	all:搜索并收录抓取网页及网页的链接地址
-	none: 搜索引擎将忽略此网页，等价于noindex，nofollow
-	noindex/index: 搜索引擎不索引/索引此网页。
-	nofollow/follow: 搜索引擎不继续/继续通过此网页的链接搜素其他网页
--->
-<meta name="robots" content="all" />
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/contain/head.jsp" %>
 <title>JS 模拟 HTTP Ping</title>
 <style>
 html{
@@ -57,6 +43,7 @@ button{
 	<hr/>
 </div>
 <div id="divContent"></div>
+<%@ include file="/WEB-INF/view/contain/bottom.jsp" %>
 <script>
 	$.ping = function(option){
 		var defaults = {
