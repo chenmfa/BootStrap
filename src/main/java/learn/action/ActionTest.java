@@ -1,6 +1,7 @@
 package learn.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -78,17 +79,17 @@ public class ActionTest {
 		String result = "";
 		switch(actionType){
 			case 1:
-				Map<String,String> logList = LogUtil.getLogList();
-				for(Map.Entry<String,String> entry: logList.entrySet()){
-					System.out.println(entry.getKey()+"----"+entry.getValue());
+				List<org.apache.log4j.Logger> logList = LogUtil.getLogList("");
+				for(org.apache.log4j.Logger single: logList){
+					System.out.println(single.getName()+"----"+single.getLevel().toString());
 				}
 				result = JSON.toJSONString(logList);
 				break;
 			case 2:
-				result = JSON.toJSONString(LogUtil.getLogList(true));
+				result = JSON.toJSONString(LogUtil.getLogList(""));
 				break;
 			case 3:
-				LogUtil.changeLogger("root", action);
+				LogUtil.changeLogger("learn", action);
 				result= "成功";
 				break;
 			default:

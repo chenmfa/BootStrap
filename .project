@@ -3,6 +3,7 @@
 	<name>BootStrap</name>
 	<comment></comment>
 	<projects>
+		<project>DsmQrCodeUtil32</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,5 +1,6 @@
 package test;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,6 +43,30 @@ public class Test {
 	private static final Logger logger = LoggerFactory.getLogger(Test.class);
 	
   public static void main(String[] args) throws IOException, SQLException{
+  	BufferedReader bfrs =new BufferedReader(new FileReader(new File("test.txt")));
+  	String line=null;
+  	StringBuilder sbSql = new StringBuilder();
+  	int count =0;
+  	while((line= bfrs.readLine()) !=null){
+  		String[] paramArr = line.split(",;\n");
+  		if(paramArr.length>=3){
+  			String paramA=  paramArr[0];
+  			String paramB=  paramArr[1];
+  			String paramC=  paramArr[2];
+  			sbSql.append("update t1 set t1.n1="+paramB+",t1.n2 ="+paramC+" where t1 = "+paramA+";");
+  			count++;
+  			if(count>100){
+  				//执行sql语句
+  				sbSql.setLength(0);
+  				count=0;
+  			}
+  		}
+  	}
+  	System.out.println("C2:F8:7E:OA:AE:EE".equals("C2:F8:7E:OA:AE:EE"));
+  	byte[] bu = new byte[]{-112};
+  	System.out.println(Boolean.parseBoolean("offline"));
+  	System.out.println("90".getBytes());
+  	System.out.println(Integer.toHexString(144));
   	System.out.println("13585425616".matches("((13[0-9])|(15[^4,\\D])|(18[0-9])|(17[6-8])|(17[0|1|3])|(147))\\d{8}$"));
   	//BouncyCastleProvider bcs = new BouncyCastleProvider();
   	System.out.println(System.getProperty("java.class.path"));

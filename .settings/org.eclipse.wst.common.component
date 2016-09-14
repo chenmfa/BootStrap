@@ -5,7 +5,11 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+        <dependent-module archiveName="DsmQrCodeUtil32.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/DsmQrCodeUtil32/DsmQrCodeUtil32">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/BootStrap/build/classes"/>
-        <property name="context-root" value="BaseLearn"/>
+        <property name="context-root" value="BootStrap"/>
     </wb-module>
 </project-modules>

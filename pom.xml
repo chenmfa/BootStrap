@@ -58,6 +58,11 @@
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
       <version>${spring.version}</version>
     </dependency>
@@ -159,6 +164,11 @@
 			<groupId>commons-dbcp</groupId>  
 			<artifactId>commons-dbcp</artifactId>  
 			<version>1.2.2</version>  
+		</dependency>
+		<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>druid</artifactId>
+	    <version>1.0.25</version>
 		</dependency>
 		<!-- jdbc及连接池 包 -->
     <dependency>
@@ -318,6 +328,13 @@
 		    <artifactId>bcprov-jdk15</artifactId>
 		    <version>140</version>
 		</dependency>
+		
+		<!-- neetty -->
+		<dependency>
+    	<groupId>io.netty</groupId>
+    	<artifactId>netty-all</artifactId>
+    	<version>5.0.0.Alpha2</version>
+		</dependency>		
   </dependencies>
   <build>
 		<plugins>
