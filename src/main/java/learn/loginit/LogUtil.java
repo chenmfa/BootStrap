@@ -41,7 +41,9 @@ public class LogUtil {
         (Class.class.getResource("/").toURI().getPath()+"log4j.properties");
     final URL log4jUrl = 
         (Class.class.getResource("/log4j.properties"));
+
     //URL resource = Class.class.getClassLoader().getResource("log4j.properties");
+
     //PropertyConfigurator.configure(resource);
 		//PropertyConfigurator.configure(log4jClzdir);
     //PropertyConfigurator.configure(Class.class.getResource("/log4j.properties"));
