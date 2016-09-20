@@ -15,11 +15,11 @@
   </properties>
   <!-- 配置依赖包 -->
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-    </dependency>
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.12</version>
+		</dependency>
     <!-- spring 核心包 -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -337,6 +337,14 @@
 		</dependency>		
   </dependencies>
   <build>
+		<!-- 设置源代码、测试代码的目录与资源文件目录 -->
+    <sourceDirectory>src/main/java </sourceDirectory>  
+    <testSourceDirectory>src/test/java</testSourceDirectory>  
+    <resources>  
+        <resource>  
+            <directory>src/main/resources</directory>  
+        </resource>  
+    </resources>
 		<plugins>
 		  <!-- maven 的打包源码的插件 -->
 			<plugin>  
