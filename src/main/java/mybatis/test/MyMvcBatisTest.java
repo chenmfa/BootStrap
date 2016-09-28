@@ -9,7 +9,6 @@ import mybatis.dynamicproxy.impl.ProxyManagerImpl;
 import mybatis.service.ICompanyService;
 
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.naming.factory.BeanFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

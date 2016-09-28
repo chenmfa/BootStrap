@@ -5,13 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.URISyntaxException;
-import java.util.RandomAccess;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import bean.LogContentDTO;
 
 /**
  * @author chenmfa
@@ -31,15 +36,21 @@ public class LogAnalyser {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LogAnalyser.class);
 	
-	private static AtomicLong filePointer = new AtomicLong(); 
+	private static AtomicLong filePointer = new AtomicLong();
 	
+	private static Map<String,List<LogContentDTO>> logMap = new HashMap<String,List<LogContentDTO>>();
+	
+	private static List<LogContentDTO> logcontentAllList = new ArrayList<LogContentDTO>();
+	
+	private static ThreadLocal<Long> currentFileIndex = new ThreadLocal<Long>();
+		
 	public static void main(String[] args) {
-		LogAnalyser.analyse(new File("D:\\log\\locknetty\\filelog.log"));
+		LogAnalyser.analyse(new File("D:\\base\\netty.log"));
+		List list = LogAnalyser.getFilterLog("C2:B3:0F:7E:B0:F2");
+		System.out.println(list);
   }
 	
-	//priivate 
-	
-	public static void analyse(File file,String mode){
+	public static void analyse(File file,String mode,String filterPattern){
 		if(null == mode){
 			mode= "r";
 		}
@@ -49,29 +60,47 @@ public class LogAnalyser {
 		RandomAccessFile random = null;
 		try {
 	    random = new RandomAccessFile(file, mode);
-	    System.out.println(random.getFilePointer());
       String line;
       while((line = random.readLine()) != null ){
-      	logger.info(line);
-      	Pattern pattern = Pattern.compile("\\[(.*)\\] \\[(.*)\\]\\[([^\\]]*)\\](.*)");
+      	line = new String(line.getBytes("ISO8859-1"),"UTF-8");
+      	//logger.info(line);
+      	//\\[([^\\]]*)\\] 这个是[日志类型] [时间][处理类][唯一性标签][设备类型]
+      	Pattern pattern = Pattern.compile("\\[([^\\]]*)\\] \\[([^\\]]*)\\]\\[([^\\]]*)\\](\\[([^\\]]*)\\])?(\\[([^\\]]*)\\])?(.[^\\[\\]]*)");
       	Matcher match = pattern.matcher(line);
       	if(match.find()){
-      		String fullMsg = match.group(0);
-      		String msgType = match.group(1);
-      		String msgDate = match.group(2);
-      		String msgClass = match.group(3);
-      		String msg = match.group(4);
-      		if(msgClass.indexOf("com.dsmzg.tcp")>=0){      			
-      			System.out.println("消息类型:	"+msgType);
-      			System.out.println("消息时间:	"+msgDate);
-      			System.out.println("消息类: "+msgClass);
-      			System.out.println("消息体: "+msg);
+      		int groupCount = match.groupCount();
+      		String fullMsg = getNoSpaceData(match.group(0));
+      		String logLevel = getNoSpaceData(match.group(1));
+      		String logTime = getNoSpaceData(match.group(2));
+      		String logClass = getNoSpaceData(match.group(3));
+      		String logIdentity = getNoSpaceData(match.group(5));
+      		String logDesc = getNoSpaceData(match.group(7));
+      		String logContent= getNoSpaceData(match.group(groupCount));
+
+      		if(logClass.indexOf("com.dsmzg")>=0 && null != logIdentity && logIdentity.length()>12){
+      			LogContentDTO log = new LogContentDTO();
+      			log.setLogDesc(logDesc);
+      			log.setLogContent(logContent);
+      			log.setLogClass(logClass);
+      			log.setLogIdentity(logIdentity);
+      			log.setLogLevel(logLevel);
+      			log.setLogTime(logTime);
+      			//System.out.println(log);
+      			logcontentAllList.add(log);
+      			//根据自定义的filterpattern来分组
+      			String key = logIdentity.substring(0,17);
+      			if(logMap.containsKey(key)){
+      				logMap.get(key).add(log);
+      			}else{
+      				List<LogContentDTO> logcontentList = new ArrayList<LogContentDTO>();
+      				logcontentList.add(log);
+      				logMap.put(key, logcontentList);
+      			}
       		}
       	}
-      	//logger.info(line+"--");
       }
       long pointer = random.getFilePointer();
-      filePointer.set(pointer+3l);
+      currentFileIndex.set(pointer+3l);
     } catch (FileNotFoundException e) {
     	logger.error("文件不存在"+file.getName());
     }	catch (IOException e) {
@@ -88,10 +117,34 @@ public class LogAnalyser {
 	}
 	
 	public static void analyse(File file){
-		analyse(file,null);
+		analyse(file,null,null);
+	}
+	
+	public static void analyse(File file,String pattern){
+		analyse(file,null,pattern);
+	}
+	
+	public static void analyse(String fileName){
+		analyse(new File(fileName));
+	}
+	
+	public static void analyse(String fileName,String pattern){
+		analyse(new File(fileName),pattern);
+	}
+	
+	public static List<LogContentDTO> getFilterLog(String key){
+		return logMap.get(key);
+	}
+	
+	public static String getNoSpaceData(String data){
+		return (null != data)?data.trim():"";
 	}
 
 	private static class AnalyserHolder{
-		//private 
+		private static  final LogAnalyser instance =new LogAnalyser();		
+	}
+	
+	public static LogAnalyser getInstance(){
+		return AnalyserHolder.instance;
 	}
 }

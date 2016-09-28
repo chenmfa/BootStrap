@@ -1,6 +1,8 @@
 package learn.qrcode;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -74,11 +76,18 @@ public class ZXingQrcode {
 		BufferedImage image = null;
 		BitMatrix matrix = new MultiFormatWriter().encode(contents, BarcodeFormat.QR_CODE, width, height);
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = image.createGraphics();	 
+		// 画图	 
+		g2d.setColor(new Color(255,0,0));
+		g2d.setStroke(new BasicStroke(1)); 
+		g2d.drawRect(0, 0, width, height);
+		//释放对象	 
+		g2d.dispose();
 		int matrixWidth = matrix.getWidth();
 		int matrixHeight = matrix.getHeight();
 		for(int x=0;x< matrixWidth; x++){
 			for(int y =0; y< matrixHeight; y++){
-				image.setRGB(x, y, matrix.get(x, y)?qrcodeColor:0x999999);
+				image.setRGB(x, y, matrix.get(x, y)?qrcodeColor:0xFF0000);
 			}
 		}
 		
@@ -124,10 +133,10 @@ public class ZXingQrcode {
 		//用.或者不加参数获取类路径，用/获取classPath 路径
 		String clasPath =ZXingQrcode.class.getResource("/").getPath();		
 		String contents ="欢迎使用充电设备";
-		File f = new File(clasPath+"output/qrCode.jpg");
+		File f = new File(clasPath+"output/qrCode.png");
 		if(!f.getParentFile().exists()){
 			f.mkdirs();
 		}
-		zq.writeToFile(contents, f, "jpg");
+		zq.writeToFile(contents, f, "png");
   }
 }
