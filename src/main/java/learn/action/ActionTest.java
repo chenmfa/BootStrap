@@ -30,6 +30,10 @@ public class ActionTest {
 	
 	private static final ExecutorService executor = Executors.newFixedThreadPool(2);
 	
+	public ActionTest(){
+		System.out.println("ActionTest---begin");
+	}
+	
 	@RequestMapping("getLogger.json")
 	@ResponseBody
 	public String testLogger(){

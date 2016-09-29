@@ -398,7 +398,7 @@
 		    <configuration>
 		        <archive>
 		        <manifest>
-		            <mainClass>com.dsmzg.qrcodeprinter.QrcodePrinter</mainClass>
+		            <mainClass>test.Test</mainClass>
 		        </manifest>
 		        </archive>
 		        <descriptorRefs>
@@ -415,7 +415,7 @@
 			 			<archive>
 			 				<manifest>
 			 					<addClasspath>true</addClasspath>
-			 					<mainClass>com.dsmzg.qrcodeprinter.QrcodePrinter</mainClass>
+			 					<mainClass>test.Test</mainClass>
 			 					<classpathPrefix>dependency/</classpathPrefix>
 			 				</manifest>
 			 			</archive> 
