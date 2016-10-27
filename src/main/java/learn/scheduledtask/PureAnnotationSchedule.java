@@ -10,7 +10,7 @@ public class PureAnnotationSchedule {
 	
 	private static final Logger log = 
 			LoggerFactory.getLogger(SpringTaskSchedule.class);
-	@Scheduled(cron="* * 8 * * ?")
+	@Scheduled(cron="0/10 * * * * ?")
 	public void annotationSchedule(){
 		
 		log.info(Thread.currentThread().getName()+"--- Annotation Schedule: "+ System.currentTimeMillis());

@@ -53,7 +53,7 @@ public class ActionTest {
 	@RequestMapping("sendMsg.json")
 	@ResponseBody
 	public String sendMsg(final String cid, HttpServletRequest request) throws Exception{
-
+		request.getParameter("");
 		Map<String, String> properties =new HashMap<String,String>(){
       private static final long serialVersionUID = 1L;
       {

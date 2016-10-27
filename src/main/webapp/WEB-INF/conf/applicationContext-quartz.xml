@@ -97,4 +97,16 @@
   <task:scheduler id="qbScheduler" pool-size="10"/>  
   <!-- end -->
     
+    
+  <!-- 配置动态读取数据库job配置并修改正在执行的job -->
+  <!-- 1.创建一个集成jobFactory的接口类 -->
+  <bean id="jobFactory" class="learn.scheduledtask.JobFactory" />
+	<!-- 配置spring定时任务处理类 -->
+  <bean name="configurableFactory" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+  	<!-- <property name="startupDelay" value="30"></property>   -->
+  	<property name="applicationContextSchedulerContextKey" value ="applicationContext" />
+  	<property name="jobFactory" ref="jobFactory"></property>
+	</bean>
+	<!-- 3.通过注解方式配置一个定时读取数据库的任务，完成更新定时任务工厂操作 -->
+  <!-- 配置结束 -->	
 </beans>

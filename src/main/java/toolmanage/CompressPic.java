@@ -9,8 +9,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 //现在改用com.codec.包
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
+//import com.sun.image.codec.jpeg.JPEGCodec;
+//import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 public class CompressPic {
 
@@ -77,7 +77,7 @@ public class CompressPic {
 	public String compressPic() {
 		try {
 			// 获得源文件
-			file = new File(inputDir);
+			file = new File(inputDir + inputFileName);
 			//System.out.println(inputDir + inputFileName);
 			if (!file.exists()) {
 				//throw new Exception("文件不存在");
@@ -121,8 +121,8 @@ public class CompressPic {
 				FileOutputStream out = new FileOutputStream(outputDir
 						+ outputFileName);
 				// JPEGImageEncoder可适用于其他图片类型的转换
-				JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-				encoder.encode(tag);
+				//JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+				//encoder.encode(tag);
 				out.close();
 			}
 		} catch (IOException ex) {

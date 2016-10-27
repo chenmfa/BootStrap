@@ -43,6 +43,14 @@ public class Test {
 	private static final Logger logger = LoggerFactory.getLogger(Test.class);
 	
   public static void main(String[] args) throws IOException, SQLException{
+  	Boolean boo =null;
+  	if(boo){
+  		System.out.println("Succeed");
+  	}else{
+  		System.out.println("Cry");
+  	}
+  	System.out.println(Test.class.getResource("/").toString().split("\\/")[1]);
+  //	System.out.println(Pattern.compile("(\\)(.*)").matcher("/D:/workspace/BootStrap/target/classes/").find());
   	BufferedReader bfrs =new BufferedReader(new FileReader(new File("test.txt")));
   	String line=null;
   	StringBuilder sbSql = new StringBuilder();
