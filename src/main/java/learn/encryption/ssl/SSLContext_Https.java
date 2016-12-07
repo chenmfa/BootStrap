@@ -58,7 +58,7 @@ public class SSLContext_Https {
        try {
            // 加载证书流, 这里证书需要放在assets下
            //InputStream inputStream = App.getInstance().getAssets().open("serverkey.cer");
-      	 	 InputStream inputStream =  new FileInputStream(new File("D:\\tomcatcert\\serverkey.cer"));
+      	 	 InputStream inputStream =  new FileInputStream(new File("D:\\tomcatcert_20161205_186\\server.cer"));
            // 生成证书
            CertificateFactory cerFactory = CertificateFactory.getInstance("X.509");
            Certificate cer = cerFactory.generateCertificate(inputStream);
@@ -77,7 +77,7 @@ public class SSLContext_Https {
            //KeyStore clientKeyStore = KeyStore.getInstance("BKS");
            KeyStore clientKeyStore = KeyStore.getInstance("jks");
            //clientKeyStore.load(App.getInstance().getAssets().open("clientkey.bks"), "123456".toCharArray());
-           clientKeyStore.load(new FileInputStream(new File("D:\\tomcatcert\\client.ks")), "123456".toCharArray());
+           clientKeyStore.load(new FileInputStream(new File("D:\\tomcatcert_20161205_186\\client.ks")), "123456".toCharArray());
 
            // 把初始化clientKeyStore放入keyManagerFactory
            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());

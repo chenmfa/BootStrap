@@ -16,17 +16,17 @@ import javax.net.ssl.SSLSession;
 public class SimpleJavaHttps {
   public static void main(String[] args) {
     try {
-	    System.setProperty("javax.net.ssl.trustStore", "D:\\tomcatcert\\client.ks");
+	    System.setProperty("javax.net.ssl.trustStore", "D:\\tomcatcert_20161205_186\\client.ks");
 	    System.setProperty("javax.net.ssl.trustStorePassword","123456");
 	    
-	    System.setProperty("javax.net.ssl.keyStore", "D:\\tomcatcert\\client.ks");
+	    System.setProperty("javax.net.ssl.keyStore", "D:\\tomcatcert_20161205_186\\client.ks");
       System.setProperty("javax.net.ssl.keyStorePassword","123456");
       //System.setProperty("javax.net.ssl.keyStoreType", "PKCS12");
 	    // 主机名称验证策略
 	    // 主机名称验证策略
       HttpsURLConnection.setDefaultHostnameVerifier(new TrustAnyVerifier());
 
-	    String address = "https://192.168.1.115/lock/index.jsp";
+	    String address = "https://192.168.1.186:4437/lock/index.jsp";
 	    URL url = new URL(address);
 	    URLConnection conn = url.openConnection();
 	    InputStream input = conn.getInputStream();

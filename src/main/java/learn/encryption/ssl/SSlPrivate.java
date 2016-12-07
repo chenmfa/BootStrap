@@ -25,7 +25,7 @@ public class SSlPrivate {
 		throws Exception {
 	 // 创建一个证书库，并将证书导入证书库
 	KeyStore keyStore = KeyStore.getInstance("jks");
-	keyStore.load(new FileInputStream(new File("D:\\tomcatcert\\client.ks")),
+	keyStore.load(new FileInputStream(new File("D:\\tomcatcert_20161205_186\\client.ks")),
 	"123456".toCharArray());
 		Enumeration<?> localEnumeration;
 		localEnumeration = keyStore.aliases();
