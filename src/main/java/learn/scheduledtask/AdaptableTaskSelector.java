@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdaptableTaskSelector{
 
-	@Scheduled(cron="0/15 * * * * ?")
+	@Scheduled(cron="0/5 * * * * ?")
 	public void queryScheduleTask(){
 		System.out.println("定时任务每15秒开始一次");
 	}

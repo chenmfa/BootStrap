@@ -11,8 +11,6 @@ import java.util.EnumMap;
 
 import javax.imageio.ImageIO;
 
-import org.w3c.dom.css.RGBColor;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -33,9 +31,9 @@ public class ZXingQrcode {
 	private static int backgroundColor = 0xFFFFFFFF; //0xFFFF0000
 	
 	//默认的高度和宽度
-	private int width = 300;
+	private int width = 450;
 	
-	private int height = 300;
+	private int height = 450;
 	
 	private EnumMap<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
 	
@@ -49,7 +47,7 @@ public class ZXingQrcode {
 	 *	选择M，扫描速度快。 
 	 */
 	public ZXingQrcode(){
-		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
 		//二维码边框大小：1,2,3,4(最大)
 		hints.put(EncodeHintType.MARGIN, 1);
 		//hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
@@ -67,8 +65,8 @@ public class ZXingQrcode {
 	
 	public ZXingQrcode(int width, int height, int qrcodeColor, int backgroundColor){
 		this(width, height);
-		this.qrcodeColor = qrcodeColor;
-		this.backgroundColor = backgroundColor;
+		ZXingQrcode.qrcodeColor = qrcodeColor;
+		ZXingQrcode.backgroundColor = backgroundColor;
 	}
 	
 	

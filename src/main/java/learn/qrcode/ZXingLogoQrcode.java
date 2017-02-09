@@ -35,8 +35,8 @@ public class ZXingLogoQrcode extends BaseLearn{
 	    qrcodeImage = ImageIO.read(sourceQrcodeImage);
 	    Graphics2D g2d = qrcodeImage.createGraphics();
 	    BufferedImage bi = ImageIO.read(logo);
-	    int logoWidth = (bi.getWidth()>(qrcodeImage.getWidth()/5))?qrcodeImage.getWidth()/5:bi.getWidth(null);
-	    int logoHeight = (bi.getHeight()>(qrcodeImage.getHeight()/5))?qrcodeImage.getHeight()/5:bi.getHeight(null);
+	    int logoWidth = (bi.getWidth()>(qrcodeImage.getWidth()/6))?qrcodeImage.getWidth()/6:bi.getWidth(null);
+	    int logoHeight = (bi.getHeight()>(qrcodeImage.getHeight()/6))?qrcodeImage.getHeight()/6:bi.getHeight(null);
 	    //二维码图片大小减去logo大小
 	    int x = (qrcodeImage.getWidth()-logoWidth)/2;
 	    int y = (qrcodeImage.getHeight()-logoHeight)/2;
@@ -45,7 +45,7 @@ public class ZXingLogoQrcode extends BaseLearn{
 	    g2d.drawRoundRect(x, y, logoWidth, logoHeight, 15,15);
 	    
 	    g2d.setStroke(new BasicStroke(2));
-	    g2d.setColor(Color.white);
+	    g2d.setColor(Color.BLACK);
 	    g2d.drawRect(x, y, logoWidth, logoHeight);
 	    g2d.dispose();
 	    
@@ -81,10 +81,10 @@ public class ZXingLogoQrcode extends BaseLearn{
 	public static void main(String[] args) {
 		ZXingLogoQrcode logoCode = new ZXingLogoQrcode();
 		String clasPath =ZXingQrcode.class.getResource("/").getPath();	
-		File sourceQrcodeImage = new File(clasPath+"output/qrCode.jpg");
+		File sourceQrcodeImage = new File(clasPath+"output/qrCode.png");
 		File logo = new File(clasPath+"output/logo.png");
 		BufferedImage bufferedImage = logoCode.encodeLogoToImage(sourceQrcodeImage, logo);
-		File output = new File(clasPath+"output/logogqrCode.jpg");
-		logoCode.writeImageToFile(bufferedImage, "jpg", output);
+		File output = new File(clasPath+"output/logogqrCode.png");
+		logoCode.writeImageToFile(bufferedImage, "png", output);
   }
 }

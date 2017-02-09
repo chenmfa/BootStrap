@@ -16,6 +16,7 @@ import learn.push.getui.GeTuiPush;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,7 +63,6 @@ public class ActionTest {
 		};
 		new Thread(new GeTuiPush(properties)).start();
 		Callable<String> call = new GeTuiPush(properties);
-		
 //		FutureTask<String> task = new FutureTask<>(call);
 //		executor.execute(task);
 //		String string = task.get(2000, TimeUnit.MILLISECONDS);
