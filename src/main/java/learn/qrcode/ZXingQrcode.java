@@ -72,7 +72,7 @@ public class ZXingQrcode {
 	
 	public BufferedImage encodeImage(String contents) throws WriterException{
 		BufferedImage image = null;
-		BitMatrix matrix = new MultiFormatWriter().encode(contents, BarcodeFormat.QR_CODE, width, height);
+		BitMatrix matrix = new MultiFormatWriter().encode(contents, BarcodeFormat.QR_CODE, width, height, hints);
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = image.createGraphics();	 
 		// 画图	 
