@@ -31,9 +31,9 @@ public class ZXingQrcode {
 	private static int backgroundColor = 0xFFFFFFFF; //0xFFFF0000
 	
 	//默认的高度和宽度
-	private int width = 450;
+	private int width = 320;
 	
-	private int height = 450;
+	private int height = 320;
 	
 	private EnumMap<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
 	
@@ -50,7 +50,7 @@ public class ZXingQrcode {
 		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
 		//二维码边框大小：1,2,3,4(最大)
 		hints.put(EncodeHintType.MARGIN, 1);
-		//hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+		hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
 		hints.put(EncodeHintType.DATA_MATRIX_SHAPE, SymbolShapeHint.FORCE_RECTANGLE);
 		//设置最大和最小值，现已失效
 		//hints.put(EncodeHintType.MAX_SIZE, 500);
@@ -76,7 +76,7 @@ public class ZXingQrcode {
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = image.createGraphics();	 
 		// 画图	 
-		g2d.setColor(new Color(255,0,0));
+		g2d.setColor(new Color(backgroundColor));//new Color(255,0,0)
 		g2d.setStroke(new BasicStroke(1)); 
 		g2d.drawRect(0, 0, width, height);
 		//释放对象	 
