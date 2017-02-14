@@ -31,6 +31,9 @@ public class ActionTest {
 	private static final ExecutorService executor = Executors.newFixedThreadPool(2);
 	
 	public ActionTest(){
+	  urcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+    String pattern =  "classpath*:xmls/sqlmap/*/*.xml";//ResourceLoader.CLASSPATH_URL_PREFIX
+    Resource[] resources = resolver.getResources(pattern);
 		System.out.println("ActionTest---begin");
 	}
 	
