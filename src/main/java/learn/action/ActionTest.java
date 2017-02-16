@@ -1,5 +1,7 @@
 package learn.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,12 @@ import learn.push.getui.GeTuiPush;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,8 +39,8 @@ public class ActionTest {
 	
 	private static final ExecutorService executor = Executors.newFixedThreadPool(2);
 	
-	public ActionTest(){
-	  urcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+	public ActionTest() throws IOException{
+	  PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
     String pattern =  "classpath*:xmls/sqlmap/*/*.xml";//ResourceLoader.CLASSPATH_URL_PREFIX
     Resource[] resources = resolver.getResources(pattern);
 		System.out.println("ActionTest---begin");
@@ -105,4 +113,20 @@ public class ActionTest {
 		}
 		return result;
 	}
+	
+  /**
+   * Spring下载文件
+   * @param request
+   * @throws IOException 
+   */
+  @RequestMapping(value="/download")
+  public ResponseEntity<byte[]> download(HttpServletRequest request) throws IOException{
+    // 获取项目webapp目录路径下的文件
+    String path = request.getSession().getServletContext().getRealPath("/");
+    File file = new File(path+"/soft/javaweb.zip");
+    HttpHeaders headers = new HttpHeaders();  
+    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+    headers.setContentDispositionFormData("attachment", "javaweb.zip");
+    return new ResponseEntity<byte[]>(org.apache.commons.io.FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
+  }
 }

@@ -1,5 +1,9 @@
 package learn.util;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +12,7 @@ import java.util.Map;
  * @date 2015年12月24日
  * @description spring的classutil 仿照来的
  */
+@SuppressWarnings("unchecked")
 public class ClassUtil {
   
   //存储基础数据类型包装类与基础类的映射
@@ -35,6 +40,41 @@ public class ClassUtil {
   
   public static Class<?> resolvePossiblePrimitiveType(Class<?> clz){
     return (clz.isPrimitive() && clz != void.class)?primitiveTypeToWrapperMap.get(clz):clz;
+  }
+  
+ 
+  /**
+   * @TODO 从一个对象中获取属性为fieldName的当前值(注意当前对象不能为list之类的，否则可能获取不到fieldName的值)
+   * @param object
+   * @param fieldName
+   * @return
+   * @throws IntrospectionException 
+   * @throws InvocationTargetException 
+   * @throws IllegalArgumentException 
+   * @throws IllegalAccessException 
+   */
+  public static String getFieldValueFromObject(Object object,String fieldName) 
+      throws IntrospectionException, IllegalAccessException, 
+      IllegalArgumentException, InvocationTargetException{
+    String fieldValue="";
+    if(null != object){
+      if(object instanceof Map<?, ?>){
+        Map<String,Object> map = (Map)object;
+        Object result = map.get(fieldName);
+        if(null != result){
+          fieldValue = result.toString();
+        }
+      }else{        
+        Class<?> clz = object.getClass();
+        PropertyDescriptor pd = new PropertyDescriptor(fieldName, clz);
+        Method readMethod = pd.getReadMethod();
+        Object invoke = readMethod.invoke(object);
+        if(null !=invoke){
+          fieldValue = invoke.toString();
+        }
+      }
+    }
+    return fieldValue;
   }
   
   public static void main(String[] args){
