@@ -107,7 +107,24 @@
 	       -->
 	    </aop:aspect>
 	  </aop:config> 
-	  
+	 <!--
+	两种xml配置方式
+	1.
+	<aop:config proxy-target-class="false">	 
+	 <aop:pointcut expression="(execution(* com.dsmzg.*.service.*Service.insert*(..)))" id="allDMMethod"/>
+		<aop:aspect id="accessAspect" ref="accessHandler">		
+			<aop:around method="insertAccessLog" pointcut-ref="allDMMethod"/>
+		</aop:aspect>
+	</aop:config>
+	<bean id="accessHandler" class="com.dsmzg.base.handler.GlobalAccessHandler"></bean> 
+	2.
+	<aop:config proxy-target-class="true">
+  	切面:所有包含@ResultHandle注解的方法
+  <aop:pointcut expression="@annotation(com.dsmzg.base.annotation.ResultHandle)" id="resulthandle-annotation-pointcut"/>
+ 	 通知：对定义的切面执行通知
+  <aop:advisor advice-ref="accessHandler" pointcut-ref="resulthandle-annotation-pointcut"/>
+</aop:config > -->
+ 
 	  <mvc:interceptors>
 	     <!-- <mvc:interceptor> --><!-- 这样可以配置多个，单个的话，最外层其实可以去掉 -->
 	      <!--  <mvc:mapping path="/"/>/user/* -->

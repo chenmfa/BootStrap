@@ -1,4 +1,4 @@
-package bean;
+package learn.excel.bean;
 
 public class SysGridField {
     /**
