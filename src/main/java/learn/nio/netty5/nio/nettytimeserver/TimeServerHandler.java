@@ -1,4 +1,4 @@
-package learn.netty.nio.nettytimeserver;
+package learn.nio.netty5.nio.nettytimeserver;
 
 import java.util.Date;
 
@@ -7,9 +7,10 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
+@SuppressWarnings("unused")
 public class TimeServerHandler extends ChannelHandlerAdapter{
 	
-  @Override
+/*  @Override
   public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
       ByteBuf buf = (ByteBuf)msg;
       byte[] req =new byte[buf.readableBytes()];
@@ -26,7 +27,7 @@ public class TimeServerHandler extends ChannelHandlerAdapter{
   @Override
   public void channelReadComplete(ChannelHandlerContext ctx) throws Exception{
   	ctx.flush();
-  }
+  }*/
   
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception{

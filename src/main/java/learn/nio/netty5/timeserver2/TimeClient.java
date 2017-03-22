@@ -13,22 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package learn.netty.timeserver2;
-
-import java.io.IOException;
+package learn.nio.netty5.timeserver2;
 
 /**
  * @author lilinfeng
  * @date 2014年2月14日
  * @version 1.0
  */
-public class TimeServer {
+public class TimeClient {
 
     /**
      * @param args
-     * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+
 	int port = 8080;
 	if (args != null && args.length > 0) {
 	    try {
@@ -37,7 +35,7 @@ public class TimeServer {
 		// 采用默认值
 	    }
 	}
-	MultiplexerTimeServer timeServer = new MultiplexerTimeServer(port);
-	new Thread(timeServer, "NIO-MultiplexerTimeServer-001").start();
+	new Thread(new TimeClientHandle("127.0.0.1", port), "TimeClient-001")
+		.start();
     }
 }

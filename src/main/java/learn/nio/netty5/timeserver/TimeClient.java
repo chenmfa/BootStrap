@@ -1,4 +1,4 @@
-package learn.netty.timeserver;
+package learn.nio.netty5.timeserver;
 
 public class TimeClient{
 	

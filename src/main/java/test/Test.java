@@ -14,8 +14,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -42,7 +44,13 @@ public class Test {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Test.class);
 	
-  public static void main(String[] args) throws IOException, SQLException{
+  public static void main(String[] args) throws IOException, SQLException, ParseException{
+    SimpleDateFormat simpleDateFormat =new SimpleDateFormat("HH:mm");
+    Date date=simpleDateFormat.parse("12:23");
+    long timeStemp = date.getTime();
+    System.out.println(timeStemp );
+    String datetime = "12:23";
+    Date da= new Date(datetime);
   	Boolean boo =null;
   	if(boo){
   		System.out.println("Succeed");

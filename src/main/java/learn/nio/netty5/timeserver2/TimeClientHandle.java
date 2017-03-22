@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package learn.netty.timeserver2;
+package learn.nio.netty5.timeserver2;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

@@ -1,4 +1,4 @@
-package learn.netty.nio.nettytimeserver;
+package learn.nio.netty5.nio.nettytimeserver;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

@@ -1,4 +1,4 @@
-package learn.netty.timeserver;
+package learn.nio.netty5.timeserver;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -11,6 +11,8 @@ import java.nio.channels.SocketChannel;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
+
+import learn.util.ByteUtil;
 
 public class MultiplexerTimeServer implements Runnable{
 	
@@ -116,9 +118,10 @@ public class MultiplexerTimeServer implements Runnable{
 					 * 它将限制设置为当前位置，然后将位置设置为0
 					 */
 					buffer.flip();
-					byte[] bytes = new byte[buffer.remaining()];
+					byte[] bytes = new byte[buffer.remaining()];					
 					buffer.get(bytes);
 					String body  = new String(bytes,"UTF-8");
+	        System.out.println(ByteUtil.byteToString(bytes));
 					System.out.println("The time server receive order: "+ body);
 					String currentTime = "QUERY TIME ORDER".equals(body)?
 							new Date(System.currentTimeMillis()).toString():"BAD ORDER";

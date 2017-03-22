@@ -123,11 +123,21 @@
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
     </dependency>
-    <dependency>
+<!--     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
       <version>${slf4j.version}</version>
-    </dependency>
+    </dependency> -->
+		<dependency> <!-- 桥接：告诉Slf4j使用Log4j2 -->
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency> <!-- 桥接：告诉commons logging使用Log4j2 -->
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jcl</artifactId>
+			<version>2.2</version>
+		</dependency>    
     <!-- 日志管理包结束 -->
     <!-- JSON 格式化包 -->
     <dependency>
@@ -335,18 +345,30 @@
 		</dependency>
 		
 		<!-- neetty -->
-		<dependency>
+		<!-- <dependency>
     	<groupId>io.netty</groupId>
     	<artifactId>netty-all</artifactId>
     	<version>5.0.0.Alpha2</version>
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+		<dependency>
+	    <groupId>io.netty</groupId>
+	    <artifactId>netty-all</artifactId>
+	    <version>4.1.9.Final</version>
 		</dependency>
+		
 		
 		<!-- Velocity 模板引擎 -->
 		<dependency>
 	    <groupId>org.apache.velocity</groupId>
 	    <artifactId>velocity</artifactId>
 	    <version>1.7</version>
-		</dependency>		
+		</dependency>
+		<dependency>
+	    <groupId>com.heavenlake.wordapi</groupId>
+	    <artifactId>Java2Word</artifactId>
+	    <version>1.0.0</version>		
+		</dependency>	
   </dependencies>
   <build>
 		<!-- 设置源代码、测试代码的目录与资源文件目录 -->

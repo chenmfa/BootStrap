@@ -1,4 +1,4 @@
-package learn.netty.nio.nettytimeserver;
+package learn.nio.netty5.nio.nettytimeserver;
 
 import io.netty.channel.ChannelHandlerAdapter;
 
