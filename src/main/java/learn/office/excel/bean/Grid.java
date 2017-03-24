@@ -1,9 +1,10 @@
-package learn.excel.bean;
+package learn.office.excel.bean;
 
 import java.awt.Color;
 import java.awt.Font;
 
-import learn.excel.Util.PoiUtil;
+import learn.office.excel.Util.PoiUtil;
+
 
 /**
  * @author chenmfa

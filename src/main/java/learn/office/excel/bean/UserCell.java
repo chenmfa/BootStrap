@@ -1,4 +1,4 @@
-package learn.excel.bean;
+package learn.office.excel.bean;
 
 import org.apache.poi.ss.usermodel.Cell;
 

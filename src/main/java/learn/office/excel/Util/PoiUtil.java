@@ -1,4 +1,4 @@
-package learn.excel.Util;
+package learn.office.excel.Util;
 
 import java.awt.Color;
 import java.beans.IntrospectionException;
@@ -18,8 +18,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 
-import learn.excel.bean.POIParam;
-import learn.excel.bean.SysGridField;
+import learn.office.excel.bean.POIParam;
+import learn.office.excel.bean.SysGridField;
 import learn.util.ClassUtil;
 
 /**

@@ -20,7 +20,7 @@
             http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
             http://www.springframework.org/schema/task
             http://www.springframework.org/schema/task/spring-task-3.2.xsd"
-    default-autowire="byName">
+            default-autowire="byName">
     <!-- 方法1： 配置quartz,继承QuartzJobBean -->
   <!-- 新版的quartz不支持JobDetailBean -->
   <bean id="job_QuartzJobBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean" >

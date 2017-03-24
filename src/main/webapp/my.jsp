@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="/head.jsp"%>
+<%@ include file="/WEB-INF/view/contain/head.jsp"%>
 <style>
 	*{
 		margin:0;
@@ -74,4 +74,4 @@
 		</div>
 	</div>
 </body>
-<%@ include file="/foot.jsp"%>
+<%@ include file="/WEB-INF/view/contain/bottom.jsp"%>

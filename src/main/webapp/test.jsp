@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="/head.jsp"%>
+<%@ include file="/WEB-INF/view/contain/head.jsp"%>
 
 <title>css制作的弹出式图片预览效果</title>
 <style type="text/css">

@@ -1,4 +1,4 @@
-package learn.excel;
+package learn.office.excel;
  
 import java.awt.BasicStroke;
 
@@ -34,8 +34,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 
-import learn.excel.bean.Grid;
-import learn.excel.bean.UserCell;
+import learn.office.excel.bean.Grid;
+import learn.office.excel.bean.UserCell;
 import sun.awt.SunHints;
  
 public class ExcelToImage {
