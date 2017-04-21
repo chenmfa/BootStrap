@@ -125,8 +125,9 @@ public class MultiplexerTimeServer implements Runnable {
 		    byte[] bytes = new byte[readBuffer.remaining()];
 		    readBuffer.get(bytes);
 		    String body = new String(bytes, "UTF-8");
-		    System.out.println("The time server receive order : "
+		    System.out.println("The time server receive order(String-format) : "
 			    + body);
+		    System.out.println("The time server receive order(HEX-format) : " + ByteUtil.byteToHexString(bytes));
 		    String currentTime = "QUERY TIME ORDER"
 			    .equalsIgnoreCase(body) ? new java.util.Date(
 			    System.currentTimeMillis()).toString()

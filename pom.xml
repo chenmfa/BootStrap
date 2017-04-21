@@ -343,7 +343,11 @@
 		    <artifactId>bcprov-jdk15</artifactId>
 		    <version>140</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.docx4j</groupId>
+			<artifactId>docx4j</artifactId>
+			<version>3.3.1</version>
+		</dependency>		
 		<!-- neetty -->
 		<!-- <dependency>
     	<groupId>io.netty</groupId>
