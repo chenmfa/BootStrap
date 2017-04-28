@@ -277,14 +277,13 @@ public class ByteUtil {
 	 * @return
 	 */
 	public static String byteToHexString(byte[] b) {
-		String msg ="";
-		
+		StringBuilder msg = new StringBuilder();		
 		for(int k=0;k<b.length;k++){
-			String temp = ""+Integer.toHexString(b[k]  & 0xFF);
+			String temp = Integer.toHexString(b[k]  & 0xFF);
 			if(Integer.toHexString(b[k]).length()==1){
-				temp = "0"+temp;
+			  msg.append("0");
 			}
-			msg = msg + temp+" ";
+			msg.append(temp+" ");
 		}
 		return msg.substring(0, msg.length() - 1);
 	}
