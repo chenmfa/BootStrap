@@ -21,7 +21,11 @@ import com.dsm.nohttpdemo.App;*/
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.security.cert.Certificate;
@@ -30,12 +34,19 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
+
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.HttpClientConnectionManager;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * Created in Jan 31, 2016 8:03:59 PM.
@@ -44,21 +55,38 @@ import javax.net.ssl.X509TrustManager;
  * @author chenmfa
  * @description SSLContext 设置https双向验证
  */
-public class SSLContext_Https {
+public class SSLContext_Https extends DefaultHttpClient{
   private static SSLContext sslContext = null;	
 	
-		public static void main(String[] args) {
-			getSSLContext2();
+		public static void main(String[] args) throws IOException {
+			getSSLContext2("D:\\HTTPS证书\\https-dsmserver.cer","D:\\HTTPS证书\\https-dsmclient.ks","clientkey@dsm2017");
+      
+      SSLSession session = sslContext.createSSLEngine("192.168.1.186", 4437).getSession();
+      
+      SSLSocketFactory ssf = sslContext.getSocketFactory(); 
+      // 创建URL对象 
+      URL myURL = new URL("https://dsmzg.com/base/user/login"); 
+      // 创建HttpsURLConnection对象，并设置其SSLSocketFactory对象 
+      HttpsURLConnection httpsConn = (HttpsURLConnection) myURL.openConnection(); 
+      httpsConn.setSSLSocketFactory(ssf); 
+      // 取得该连接的输入流，以读取响应内容 
+      InputStreamReader insr = new InputStreamReader(httpsConn.getInputStream()); 
+      // 读取服务器的响应内容并显示 
+      int respInt = insr.read(); 
+      while (respInt != -1) {
+          System.out.print((char) respInt); 
+          respInt = insr.read(); 
+      } 
     }
 		
-		 public static SSLContext getSSLContext2() {
+		 public static SSLContext getSSLContext2(String servercerfile,String clientkeyStore,String clientPass) {
        if (sslContext != null) {
            return sslContext;
        }
        try {
            // 加载证书流, 这里证书需要放在assets下
            //InputStream inputStream = App.getInstance().getAssets().open("serverkey.cer");
-      	 	 InputStream inputStream =  new FileInputStream(new File("D:\\tomcatcert_20161205_186\\server.cer"));
+      	 	 InputStream inputStream =  new FileInputStream(new File(servercerfile));
            // 生成证书
            CertificateFactory cerFactory = CertificateFactory.getInstance("X.509");
            Certificate cer = cerFactory.generateCertificate(inputStream);
@@ -77,11 +105,11 @@ public class SSLContext_Https {
            //KeyStore clientKeyStore = KeyStore.getInstance("BKS");
            KeyStore clientKeyStore = KeyStore.getInstance("jks");
            //clientKeyStore.load(App.getInstance().getAssets().open("clientkey.bks"), "123456".toCharArray());
-           clientKeyStore.load(new FileInputStream(new File("D:\\tomcatcert_20161205_186\\client.ks")), "123456".toCharArray());
+           clientKeyStore.load(new FileInputStream(new File(clientkeyStore)), clientPass.toCharArray());
 
            // 把初始化clientKeyStore放入keyManagerFactory
            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-           keyManagerFactory.init(clientKeyStore, "123456".toCharArray());
+           keyManagerFactory.init(clientKeyStore, clientPass.toCharArray());
 
            // 初始化SSLContext
            sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
