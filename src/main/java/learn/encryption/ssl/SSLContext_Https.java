@@ -65,10 +65,11 @@ public class SSLContext_Https extends DefaultHttpClient{
       
       SSLSocketFactory ssf = sslContext.getSocketFactory(); 
       // 创建URL对象 
-      URL myURL = new URL("https://dsmzg.com/base/user/login"); 
+      URL myURL = new URL("https://xiaodi.dsmzg.com/xiaodi/locklog/getOpenDoorRecordList.action?lockMac=D9:EC:03:08:5F:46"); 
       // 创建HttpsURLConnection对象，并设置其SSLSocketFactory对象 
       HttpsURLConnection httpsConn = (HttpsURLConnection) myURL.openConnection(); 
-      httpsConn.setSSLSocketFactory(ssf); 
+      httpsConn.setSSLSocketFactory(ssf);
+      httpsConn.setHostnameVerifier(HOSTNAME_VERIFIER);
       // 取得该连接的输入流，以读取响应内容 
       InputStreamReader insr = new InputStreamReader(httpsConn.getInputStream()); 
       // 读取服务器的响应内容并显示 
@@ -76,7 +77,7 @@ public class SSLContext_Https extends DefaultHttpClient{
       while (respInt != -1) {
           System.out.print((char) respInt); 
           respInt = insr.read(); 
-      } 
+      }
     }
 		
 		 public static SSLContext getSSLContext2(String servercerfile,String clientkeyStore,String clientPass) {
@@ -111,8 +112,8 @@ public class SSLContext_Https extends DefaultHttpClient{
            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
            keyManagerFactory.init(clientKeyStore, clientPass.toCharArray());
 
-           // 初始化SSLContext
-           sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
+           // 初始化SSLContext  trustManagerFactory.getTrustManagers()
+           sslContext.init(keyManagerFactory.getKeyManagers(), new TrustManager[]{trustManagers}, new SecureRandom());
        } catch (Exception e) {
            e.printStackTrace();
        }
