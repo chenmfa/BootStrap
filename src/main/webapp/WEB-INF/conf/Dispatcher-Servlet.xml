@@ -34,8 +34,24 @@
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
     
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/><!-- 可以不配置 ,是默认的-->  
 		<property name="prefix" value="/WEB-INF/views/" />  
-		<property name="suffix" value=".jsp" />  
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1"/><!-- 可以不配置 -->
 	</bean>
+	
+	 <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">   
+        <property name="favorPathExtension" value="false" />  
+        <property name="favorParameter" value="false" />   
+        <property name="ignoreAcceptHeader" value="false" />   
+        <property name="mediaTypes" >   
+            <value>  
+                atom=application/atom+xml  
+                html=text/html  
+                json=application/json
+                *=*/*  
+            </value>   
+        </property>  
+    </bean>
 </beans>

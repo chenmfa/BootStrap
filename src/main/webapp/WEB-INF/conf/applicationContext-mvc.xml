@@ -24,12 +24,25 @@
     <!-- 激活组件扫描功能，扫描项目下面的所有文件  -->
     <context:component-scan base-package="*" ></context:component-scan>
     
-        <!-- ControllerClassNameHandlerMapping用于匹配我们的Controller -->     
-		<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />  
+        <!-- ControllerClassNameHandlerMapping用于匹配我们的Controller  spring 4 废弃-->     
+		<!-- <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />   -->
 		  
-		<!-- 使用annocation创建Controller的bean -->  
-		<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>       
-
+		<!-- 使用annocation创建Controller的bean ,spring 3.2之后改用org.springframework.web.servlet.mvc.method.annotation -->         
+<!-- 		<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">       
+			<constructor-arg value="UTF-8"/>
+			ResponseEntity,ResponseBody等类似类, 
+			会导致response header含有accept-charset这个字段,而这个字段对于响应头是没有用的,以下方法可以关掉
+			<property name="writeAcceptCharset" value="false"/>新版本其实已经没有这个属性,默认就是false
+			<property name="supportedMediaTypes">
+				<list>
+					<value>text/plain;charset=UTF-8</value>
+				</list>
+			</property>			
+		</bean> -->
+		<!-- spring 4 处理request Mapping -->
+		<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		</bean>
+		
 	  <bean id="propertyConfigurer" 
 	    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	      <property name="locations">
@@ -147,6 +160,7 @@
 	    </list>
 	  </property>
 	</bean> -->
+	<!-- 启动注解，注册服务，如验证框架、全局类型转换器 -->
   <mvc:annotation-driven>
     <mvc:message-converters>
         <!-- <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" p:objectMapper-ref="htmlEscapingObjectMapper" /> -->

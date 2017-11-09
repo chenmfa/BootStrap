@@ -16,10 +16,10 @@ import javax.net.ssl.SSLSession;
 public class SimpleJavaHttps {
   public static void main(String[] args) {
     try {
-	    System.setProperty("javax.net.ssl.trustStore", "D:\\HTTPS证书\\https-dsmclient.ks");
+	    System.setProperty("javax.net.ssl.trustStore", "D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmclient.ks");
 	    System.setProperty("javax.net.ssl.trustStorePassword","clientkey@dsm2017");
 	    
-	    System.setProperty("javax.net.ssl.keyStore", "D:\\HTTPS证书\\https-dsmserver.ks");
+	    System.setProperty("javax.net.ssl.keyStore", "D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmserver.ks");
       System.setProperty("javax.net.ssl.keyStorePassword","serverkey@dsm2017");
       //System.setProperty("javax.net.ssl.keyStoreType", "PKCS12");
 	    // 主机名称验证策略

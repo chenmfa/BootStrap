@@ -1,7 +1,20 @@
 package learn.encryption.ssl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.security.KeyManagementException;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -11,10 +24,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 * @version 创建时间：2017年5月19日 下午1:14:51 
 * @description
 */
+@SuppressWarnings("deprecation")
 public class HttpsPost {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws 
+  IOException, KeyStoreException, KeyManagementException, 
+  UnrecoverableKeyException, NoSuchAlgorithmException, CertificateException {
     //HttpClientBuilder  CloseableHttpClient
-    DefaultHttpClient httpclient = new DefaultHttpClient();
+    DefaultHttpClient httpClient = new DefaultHttpClient();
 
     KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType()); 
     FileInputStream instream = new FileInputStream(new File("D:/server.jks"));
@@ -26,13 +42,13 @@ public class HttpsPost {
 
     SSLSocketFactory socketFactory = new SSLSocketFactory(trustStore,"password",trustStore);
     Scheme sch = new Scheme("https", socketFactory, 443);
-    httpclient.getConnectionManager().getSchemeRegistry().register(sch);
+    httpClient.getConnectionManager().getSchemeRegistry().register(sch);
 
     HttpGet httpget = new HttpGet("https://localhost:8443/");
 
     System.out.println("executing request" + httpget.getRequestLine());
 
-    HttpResponse response = httpclient.execute(httpget);
+    HttpResponse response = httpClient.execute(httpget);
     HttpEntity entity = response.getEntity();
 
     System.out.println("----------------------------------------");
@@ -43,6 +59,6 @@ public class HttpsPost {
     if (entity != null) {
     entity.consumeContent();
     }
-    httpclient.getConnectionManager().shutdown();
+    httpClient.getConnectionManager().shutdown();
   }
 }

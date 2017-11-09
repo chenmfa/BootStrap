@@ -59,13 +59,13 @@ public class SSLContext_Https extends DefaultHttpClient{
   private static SSLContext sslContext = null;	
 	
 		public static void main(String[] args) throws IOException {
-			getSSLContext2("D:\\HTTPS证书\\https-dsmserver.cer","D:\\HTTPS证书\\https-dsmclient.ks","clientkey@dsm2017");
+			getSSLContext2("D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmserver.cer","D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmclient.ks","clientkey@dsm2017");
       
-      SSLSession session = sslContext.createSSLEngine("192.168.1.186", 4437).getSession();
+      SSLSession session = sslContext.createSSLEngine("test.dsmzg.com", 4437).getSession();
       
       SSLSocketFactory ssf = sslContext.getSocketFactory(); 
       // 创建URL对象 
-      URL myURL = new URL("https://xiaodi.dsmzg.com/xiaodi/locklog/getOpenDoorRecordList.action?lockMac=D9:EC:03:08:5F:46"); 
+      URL myURL = new URL("https://test.dsmzg.com:4437/xiaodi/locklog/getOpenDoorRecordList.action?lockMac=D9:EC:03:08:5F:46"); 
       // 创建HttpsURLConnection对象，并设置其SSLSocketFactory对象 
       HttpsURLConnection httpsConn = (HttpsURLConnection) myURL.openConnection(); 
       httpsConn.setSSLSocketFactory(ssf);
