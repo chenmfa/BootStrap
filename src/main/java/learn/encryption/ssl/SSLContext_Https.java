@@ -59,13 +59,13 @@ public class SSLContext_Https extends DefaultHttpClient{
   private static SSLContext sslContext = null;	
 	
 		public static void main(String[] args) throws IOException {
-			getSSLContext2("D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmserver.cer","D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmclient.ks","clientkey@dsm2017");
-      
-      SSLSession session = sslContext.createSSLEngine("test.dsmzg.com", 4437).getSession();
+//			getSSLContext2("D:\\https_dsmzg_2018\\dsm-server-2018.cer","D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmclient.p12","clientkey@dsm2017");
+			getSSLContext2("D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmserver.cer","D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmclient.p12","clientkey@dsm2017");
+      //SSLSession session = sslContext.createSSLEngine("192.168.1.186", 443).getSession();
       
       SSLSocketFactory ssf = sslContext.getSocketFactory(); 
       // 创建URL对象 
-      URL myURL = new URL("https://test.dsmzg.com:4437/xiaodi/locklog/getOpenDoorRecordList.action?lockMac=D9:EC:03:08:5F:46"); 
+      URL myURL = new URL("https://192.168.1.186:443/xiaodi/locklog/getOpenDoorRecordList.action?lockMac=D9:EC:03:08:5F:46"); 
       // 创建HttpsURLConnection对象，并设置其SSLSocketFactory对象 
       HttpsURLConnection httpsConn = (HttpsURLConnection) myURL.openConnection(); 
       httpsConn.setSSLSocketFactory(ssf);
@@ -92,7 +92,7 @@ public class SSLContext_Https extends DefaultHttpClient{
            CertificateFactory cerFactory = CertificateFactory.getInstance("X.509");
            Certificate cer = cerFactory.generateCertificate(inputStream);
            // 加载证书到KeyStore
-           KeyStore keyStore = KeyStore.getInstance("jks");//在eclipse这边改成了jks，android用PKCS12不知道为什么没问题，待研究
+           KeyStore keyStore = KeyStore.getInstance("PKCS12");//在eclipse这边改成了jks，android用PKCS12不知道为什么没问题，待研究
            keyStore.load(null, null);
            keyStore.setCertificateEntry("trust", cer);
 
@@ -113,7 +113,7 @@ public class SSLContext_Https extends DefaultHttpClient{
            keyManagerFactory.init(clientKeyStore, clientPass.toCharArray());
 
            // 初始化SSLContext  trustManagerFactory.getTrustManagers()
-           sslContext.init(keyManagerFactory.getKeyManagers(), new TrustManager[]{trustManagers}, new SecureRandom());
+           sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());//new TrustManager[]{trustManagers}、、
        } catch (Exception e) {
            e.printStackTrace();
        }
@@ -189,6 +189,10 @@ public class SSLContext_Https extends DefaultHttpClient{
 
         @Override
         public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+          for(Certificate cer:chain){
+            System.out.println(cer.toString());
+          }
+          
         }
 
         @Override
