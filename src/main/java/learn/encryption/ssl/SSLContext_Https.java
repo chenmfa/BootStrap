@@ -15,6 +15,9 @@
  */
 package learn.encryption.ssl;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+
 /*import android.annotation.SuppressLint;
 
 import com.dsm.nohttpdemo.App;*/
@@ -24,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyStore;
@@ -32,6 +36,8 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -43,9 +49,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.HttpClientConnectionManager;
-import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
@@ -55,29 +58,27 @@ import org.apache.http.impl.client.DefaultHttpClient;
  * @author chenmfa
  * @description SSLContext 设置https双向验证
  */
+@SuppressWarnings("deprecation")
 public class SSLContext_Https extends DefaultHttpClient{
   private static SSLContext sslContext = null;	
 	
-		public static void main(String[] args) throws IOException {
+		public static void main(String[] args) throws IOException, IllegalArgumentException, IllegalAccessException {
 //			getSSLContext2("D:\\https_dsmzg_2018\\dsm-server-2018.cer","D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmclient.p12","clientkey@dsm2017");
-			getSSLContext2("D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmserver.cer","D:\\SubFile\\JOB_BACKUP\\DevelopmentDocuments\\HTTPS证书\\https_dsmzg_2017\\https-dsmclient.p12","clientkey@dsm2017");
+			getSSLContext2("D:\\SubFile\\JOB_BACKUP\\开发文档\\HTTPS证书\\https_dsmzg_2017\\https-dsmserver.cer",
+					"D:\\SubFile\\JOB_BACKUP\\开发文档\\HTTPS证书\\https_dsmzg_2017\\https-dsmclient.p12","clientkey@dsm2017");
       //SSLSession session = sslContext.createSSLEngine("192.168.1.186", 443).getSession();
       
-      SSLSocketFactory ssf = sslContext.getSocketFactory(); 
+      
       // 创建URL对象 
-      URL myURL = new URL("https://192.168.1.186:443/xiaodi/locklog/getOpenDoorRecordList.action?lockMac=D9:EC:03:08:5F:46"); 
-      // 创建HttpsURLConnection对象，并设置其SSLSocketFactory对象 
-      HttpsURLConnection httpsConn = (HttpsURLConnection) myURL.openConnection(); 
-      httpsConn.setSSLSocketFactory(ssf);
-      httpsConn.setHostnameVerifier(HOSTNAME_VERIFIER);
-      // 取得该连接的输入流，以读取响应内容 
-      InputStreamReader insr = new InputStreamReader(httpsConn.getInputStream()); 
-      // 读取服务器的响应内容并显示 
-      int respInt = insr.read(); 
-      while (respInt != -1) {
-          System.out.print((char) respInt); 
-          respInt = insr.read(); 
-      }
+			String url = "https://192.168.1.186:4437/xiaodi/ads/getLockAdverList?account=18668165280";
+			Map<String,String> params = new HashMap<String,String>();
+			params.put("account", "18668165280");
+			post(url, 10, params);
+//			String result = post(url, params);
+//			System.out.println(result);
+//      URL myURL = new URL("https://192.168.1.186:4437/xiaodi/server/reloadPartnerInfo");
+//      URL myURL = new URL("https://192.168.1.115:4437/xiaodi/ads/getLockAdverList?account=18668165280&token=A04BCQULBDgEFB1BQk5cU1NRU19cQU1WWkBPCg0FAwIkCVpZWl1UVExTXFRDSFZSSVlPSkADGhw7HAoQEQMDRFhAWUJYV0hBVE4JAxQLCQlPQ1oiNig/KSsmSEBPGBsAFxkDEkBYSF1eTk1USVldU1FQSEBPFh0OMQhPXEBQSBE=");
+      
     }
 		
 		 public static SSLContext getSSLContext2(String servercerfile,String clientkeyStore,String clientPass) {
@@ -200,6 +201,123 @@ public class SSLContext_Https extends DefaultHttpClient{
             return new X509Certificate[0];
         }
     };
+    
+    public static void post(String url, int repeat, Map<String,String> params) 
+        throws IllegalArgumentException, IllegalAccessException, IOException{
+      for(int i = 0; i < repeat; i++){        
+        String result = post(url, params);
+        System.out.println(result);
+      }
+    }
+    
+    /**
+     * 以Post方式向web接口请求数据,编码为utf-8
+     * 
+     * 超时时间5s,编码UTF8
+     * 
+     * @param actionUrl
+     * @param params
+     * @return
+     * @throws InvalidParameterException
+     * @throws NetWorkException
+     * @throws IOException
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
+     * @throws Exception
+     */
+    public static String post(String url, Map<String,String> params)
+        throws IOException, IllegalArgumentException, IllegalAccessException {
+      return post(url, params,5 * 1000);
+    }
+    
+    /**
+     * 以Post方式向web接口请求数据,编码为utf-8
+     * 
+     * 编码UTF8
+     * 
+     * @param actionUrl
+     * @param params
+     * @param timeout 超时时间  毫秒
+     * @return
+     * @throws InvalidParameterException
+     * @throws NetWorkException
+     * @throws IOException
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
+     * @throws Exception
+     */
+    public static String post(String url, Map<String,String> params,int timeout)
+        throws IOException, IllegalArgumentException, IllegalAccessException {
+      if (url == null || url.equals(""))
+        throw new IllegalArgumentException("url 为空");
+      if (params == null)
+        throw new IllegalArgumentException("params 参数为空");
+      if(url.indexOf('?')>0){
+        url = url + "&token=A04BCQULBDgEFB1BQk5cU1NRU19cQU1WWkBPCg0FAwIkCVpZWl1UVExTXFRDSFZSSVlPSkADGhw7HAoQEQMDRFhAWUJYV0hBVE4JAxQLCQlPQ1oiNig/KSsmSEBPGBsAFxkDEkBYSF1eTk1USVldU1FQSEBPFh0OMQhPXEBQSBE=";
+      }else{
+        url = url + "?token=A04BCQULBDgEFB1BQk5cU1NRU19cQU1WWkBPCg0FAwIkCVpZWl1UVExTXFRDSFZSSVlPSkADGhw7HAoQEQMDRFhAWUJYV0hBVE4JAxQLCQlPQ1oiNig/KSsmSEBPGBsAFxkDEkBYSF1eTk1USVldU1FQSEBPFh0OMQhPXEBQSBE=";
+      }
+      
+      String sb2 = "";
+      String BOUNDARY = java.util.UUID.randomUUID().toString();
+      String PREFIX = "--", LINEND = "\r\n";
+      String MULTIPART_FROM_DATA = "multipart/form-data";
+      String CHARSET = "UTF-8";
+      // try {
+      URL uri = new URL(url);
+      HttpsURLConnection conn = (HttpsURLConnection) uri.openConnection();
+      // 设置超时
+      conn.setConnectTimeout(timeout);
+      conn.setReadTimeout(timeout);
+      conn.setDoInput(true);
+      conn.setDoOutput(true);
+      conn.setUseCaches(false);
+      conn.setRequestMethod("POST");
+      conn.setRequestProperty("connection", "keep-alive");
+      conn.setRequestProperty("Charsert", "UTF-8");
+      conn.setRequestProperty("Content-Type", MULTIPART_FROM_DATA
+          + ";boundary=" + BOUNDARY);
+      SSLSocketFactory ssf = sslContext.getSocketFactory(); 
+      conn.setSSLSocketFactory(ssf);
+      conn.setHostnameVerifier(HOSTNAME_VERIFIER);
+      
+      StringBuilder sb = new StringBuilder();
+      for (Map.Entry<String, String> entry : params.entrySet()) {
+        sb.append(PREFIX);
+        sb.append(BOUNDARY);
+        sb.append(LINEND);
+        sb.append("Content-Disposition: form-data; name=\""
+            + entry.getKey() + "\"" + LINEND);
+        sb.append("Content-Type: text/plain; charset=" + CHARSET + LINEND);
+        sb.append("Content-Transfer-Encoding: 8bit" + LINEND);
+        sb.append(LINEND);
+        sb.append(entry.getValue());
+        sb.append(LINEND);
+      }
+
+      DataOutputStream outStream = new DataOutputStream(
+          conn.getOutputStream());
+      outStream.write(sb.toString().getBytes("UTF-8"));
+      InputStream in = null;
+
+      byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINEND).getBytes();
+      outStream.write(end_data);
+      outStream.flush();
+
+      int res = conn.getResponseCode();
+      if (res == 200) {
+        in = conn.getInputStream();
+        BufferedReader br = new BufferedReader(new InputStreamReader(in,
+            "UTF-8"));
+        String line = "";
+        for (line = br.readLine(); line != null; line = br.readLine()) {
+          sb2 = sb2 + line;
+        }
+      }
+      outStream.close();
+      conn.disconnect();
+      return sb2;
+    }
 
     /**
      * 域名验证

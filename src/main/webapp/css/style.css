@@ -1,0 +1,26 @@
+img.bg {
+    min-height: 65%;
+    min-width: %85;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 50px;
+    left: 0;
+}
+@media screen and (max-width: 1024px) {
+  img.bg {
+    left: 50%;
+    margin-left: -180px;
+  }
+}
+/* body{
+			background: url(404@2x.png) no-repeat center center fixed;
+		  -webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			background-image: url(404@2x.png);
+			background-size:100% 100%;
+			-moz-background-size:100% 100%;
+			background-size:cover; 
+		} */
